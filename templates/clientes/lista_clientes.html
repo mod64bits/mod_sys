@@ -15,6 +15,8 @@
   </div>
 </div>
 
+
+
     <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -64,7 +66,13 @@
                     <td>{{ cliente.documento }}</td>
                     <td>{{ cliente.email }}</td>
                     <td>{{ cliente.telefone }}</td>
-                    <td>X</td>
+                    <td>
+                        <div class="btn-group">
+                   <button type="button" class="update-cliente btn btn-sm btn-primary" data-form-url="{% url 'clientes:editar_cliente' cliente.pk %}">
+                    <span class="fas fa-pencil-alt"></span>
+                </button>
+                  </div>
+                    </td>
                   </tr>
                   {% endfor %}
 
@@ -123,14 +131,35 @@
         });
 </script>
 
-    <script type="text/javascript">
-
-// BS4
+<script type="text/javascript">
 $(document).ready(function() {
     $("#novo-cliente").modalForm({
         formURL: "{% url 'clientes:novo_cliente' %}",
          modalID: "#modal-default"
     });
+
+
+
+
+
+            function updateClienteModalForm() {
+            $(".update-cliente").each(function () {
+              $(this).modalForm({
+                formURL: $(this).data("form-url"),
+                asyncUpdate: false,
+                modalID: "#modal-default",
+              });
+            });
+          }
+          updateClienteModalForm();
+
+        function reinstantiateModalForms() {
+
+        updateClienteModalForm();
+
+      }
+
+
 });
     </script>
 
