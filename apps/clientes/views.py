@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalReadView, BSModalDeleteView
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from .forms import ClienteForm
@@ -24,3 +24,13 @@ class EditarClienteView(LoginRequiredMixin, BSModalUpdateView):
     form_class = ClienteForm
     success_message = 'Success: Cliente was updated.'
     success_url = reverse_lazy('clientes:lista_cliente')
+
+
+class DeletarClienteView(LoginRequiredMixin, BSModalDeleteView):
+    model = Cliente
+    template_name = 'clientes/delete_cliente.html'
+    success_message = 'Success: Cliente was deleted.'
+    success_url = reverse_lazy('clientes:lista_cliente')
+
+
+
