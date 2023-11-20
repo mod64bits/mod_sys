@@ -4,6 +4,7 @@
 
 {% block content %}
     <div class="content-wrapper">
+        {% include 'ticket/includes/iniciar_atendimento_modal.html' %}
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
@@ -83,7 +84,7 @@
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="#" class=" small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -112,7 +113,7 @@
                                     {% for ticket in object_list %}
                                         {% if ticket.status == "ABERTO" %}
                                             {% include "ticket/includes/status_aberto.html" %}
-                                            {% else %}
+                                        {% else %}
                                             {% include "ticket/includes/status_em_andamento.html" %}
                                         {% endif %}
                                     {% endfor %}
@@ -134,3 +135,25 @@
     </div>
 {% endblock content %}
 
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function iniciarAtendimentoModalForm() {
+                $(".update-atendimentoCliente").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-success"
+
+                    });
+                });
+
+            }
+            iniciarAtendimentoModalForm()
+
+        })
+
+
+
+    </script>
+{% endblock scripts %}

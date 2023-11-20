@@ -28,7 +28,7 @@ class Ticket(BaseModel):
         null=True,
         blank=True,
         related_name='responsible_tick',
-        editable=False
+
     )
     iniciado_em = models.DateTimeField(null=True, blank=True)
     status = models.CharField("Status", max_length=15, choices=STATUS, default='ABERTO')

@@ -52,10 +52,7 @@
         <div class="card-footer">
             <div class="row no-print">
                 <div class="col-12">
-                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Iniciar Atendimento
-                    </button>
-                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
-                        <i class="fas fa-download"></i> Finalizar
+                    <button  class="update-atendimentoCliente btn btn-success float-right"  data-form-url="{% url 'tickets:iniciar_atendimento' ticket.pk %}"><i class="far fa-credit-card"></i> Iniciar Atendimento
                     </button>
                 </div>
             </div>
