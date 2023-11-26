@@ -1,0 +1,198 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block css %}
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+    <style>
+        body {
+            background-color: #f8f8f8 !important;
+        }
+
+        .dz {
+            border: dashed !important;
+            background-color: #ccc !important;
+            border-radius: 10px !important;
+        }
+
+        .dz:hover {
+            background-color: aliceblue !important;
+        }
+    </style>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Timeline</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Timeline</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="timeline">
+                        <!-- timeline time label -->
+                        <div class="time-label">
+                            <span class="bg-red">Protocolo: {{ object.protocolo }}</span>
+                        </div>
+                        {% for mensagem in mensagens %}
+                            <div class="time-label">
+                                <span class="bg-green">{{ mensagem.created }}</span>
+                            </div>
+                            <div>
+
+                                <i class="fas fa-envelope bg-blue"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                    <h3 class="timeline-header"><a href="#">Equipe de Suporte </a>{{ object.ticket.responsavel.name }}</h3>
+
+                                    <div class="timeline-body">
+                                        {{ mensagem.mensagem }}
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a class="btn btn-primary btn-sm">Read more</a>
+                                        <a class="btn btn-danger btn-sm">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div>
+                            <i class="fas fa-user bg-green"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+                                <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
+                            </div>
+                        </div>
+                        <!-- END timeline item -->
+                        <!-- timeline item -->
+                        <div>
+                            <i class="fas fa-comments bg-yellow"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+                                <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+                                <div class="timeline-body">
+                                    Take me to your leader!
+                                    Switzerland is small and neutral!
+                                    We are more like Germany, ambitious and misunderstood!
+                                </div>
+                                <div class="timeline-footer">
+                                    <a class="btn btn-warning btn-sm">View comment</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END timeline item -->
+                        <!-- timeline time label -->
+                        <div class="time-label">
+                            <span class="bg-green">3 Jan. 2014</span>
+                        </div>
+                        <!-- /.timeline-label -->
+                        <!-- timeline item -->
+                        <div>
+                            <i class="fa fa-camera bg-purple"></i>
+                            <div class="timeline-item">
+                                <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
+                                <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                                <div class="timeline-body">
+                                    <img src="https://placehold.it/150x100" alt="...">
+                                    <img src="https://placehold.it/150x100" alt="...">
+                                    <img src="https://placehold.it/150x100" alt="...">
+                                    <img src="https://placehold.it/150x100" alt="...">
+                                    <img src="https://placehold.it/150x100" alt="...">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fas fa-clock bg-gray"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Input Addon</h3>
+                </div>
+                <div class="card-body">
+                    <form>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Textarea</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                        </div>
+                    </form>
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
+                            </div>
+                            <div class="card-body">
+                                <div id="actions" class="row">
+                                    <div class="col-lg-6">
+                                        <form enctype='multipart/form-data' action="{% url 'tickets:upload' object.pk %}" method='POST' class="dropzone dz" id="my-dropzone" >
+    {% csrf_token %}
+    <div class="fallback">
+      <input name="file" type="file" multiple />
+    </div>
+</form>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- /.card-body -->
+
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </section>
+    </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <script>
+
+        Dropzone.autoDiscover=false;
+        const myDropzone= new Dropzone('#my-dropzone',{
+            url: {% url 'tickets:upload' object.pk %},
+            maxFiles:5,
+            maxFilesize:10,
+
+        })
+
+    </script>
+{% endblock scripts %}
