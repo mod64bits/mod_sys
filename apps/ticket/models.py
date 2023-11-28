@@ -81,32 +81,30 @@ class MensagemAtendimento(BaseModel):
                                )
 
     def __str__(self):
-        return self.atendimento
+        return self.atendimento.protocolo
 
 
-def criar_atendimento(sender, instance, signal, *args, **kwargs):
-    if instance.status != "EM_ATENDIMENTO":
-        return
-    else:
-        atendimento_obj = Atendimento.objects.create(
-            protocolo=gerar_protocolo(),
-            ticket=instance
-        )
-        MensagemAtendimento.objects.create(
-            atendimento=atendimento_obj,
-            atendente=instance.responsavel,
-            mensagem="Olá, Estaremos dando Inicio ao seu atendimento"
-        )
-
-
-class IamagemAtendimento(BaseModel):
+class UploadImagensAtendimento(BaseModel):
     atendimento = models.ForeignKey(
         Atendimento,
         verbose_name="Atendimento",
         related_name="img_atendimento",
         on_delete=models.CASCADE
     )
-    imagem = models.ImageField("Imagem", upload_to="imagem/atendimentos")
 
     def __str__(self):
         return self.atendimento.protocolo
+
+
+class IamagemAtendimento(BaseModel):
+    upload_imagem = models.ForeignKey(
+        UploadImagensAtendimento,
+        verbose_name="Imagem Atendimento ",
+        related_name="img_atendimento",
+        on_delete=models.CASCADE
+    )
+    imagem = models.ImageField("Imagem", upload_to="imagem/atendimentos")
+
+
+
+

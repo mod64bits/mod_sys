@@ -9,11 +9,14 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
-from apps.ticket.models import IamagemAtendimento
+from itertools import chain
+from operator import attrgetter
 from .serializer import UploadImagemAtendimentoSerializer
-from .models import Ticket, Atendimento, MensagemAtendimento
+from .models import Ticket, Atendimento, MensagemAtendimento, IamagemAtendimento, UploadImagensAtendimento
 from .forms import IniciarAtendimentoForm
 from django.views.generic.base import RedirectView, View
+
+
 
 from ..core.ultils import gerar_protocolo
 from django.http import HttpResponse, JsonResponse
@@ -67,11 +70,17 @@ class AtendimentoView(DetailView):
     template_name = "ticket/atendimento.html"
 
     def get_context_data(self, **kwargs):
-        obj = self.get_object()
         context = super().get_context_data(**kwargs)
-        context["mensagens"] = obj.atendimento_mensagem.all()
+        context["mensagens"] = self._query_menssagem_imagem()
         return context
 
+
+    def _query_menssagem_imagem(self):
+        obj = self.get_object()
+        mensagem = MensagemAtendimento.objects.filter(atendimento=obj)
+        img = UploadImagensAtendimento.objects.filter(atendimento=obj)
+
+        return sorted(chain(mensagem,img),key=attrgetter('created'))
 
 class UploadImagemViwSet(viewsets.ModelViewSet):
     queryset = IamagemAtendimento.objects.all()
@@ -88,8 +97,26 @@ class UploadFile(View):
     def post(self, request, *args, **kwargs):
         my_file = request.FILES.get('file')
         _atendimento = Atendimento.objects.get(id=kwargs["pk"])
+        temp_img = datetime.today()
+        img = IamagemAtendimento.objects.first()
+        if not img:
+            total = 1000
+        else:
+            intervalo = temp_img - img.created
+            total = intervalo.total_seconds()
+        if total <= 10.00:
+            upload_obj = UploadImagensAtendimento.objects.filter(atendimento=_atendimento).first()
+            IamagemAtendimento.objects.create(
+                upload_imagem=upload_obj,
+                imagem=my_file
+            )
+            return HttpResponse('')
+
+        upload_instance = UploadImagensAtendimento.objects.create(
+            atendimento=_atendimento
+        )
         IamagemAtendimento.objects.create(
-            atendimento=_atendimento,
+            upload_imagem=upload_instance,
             imagem=my_file
         )
         return HttpResponse('')
