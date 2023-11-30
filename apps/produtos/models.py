@@ -3,8 +3,13 @@ from apps.base.models import BaseModel
 
 
 class Fornecedor(BaseModel):
+    TIPO_CLIENTE_CHOICE = [
+        ("CPF", "CPF"),
+        ("CNPJ", "CNPJ"),
+    ]
+    tipo = models.CharField('Tipo', max_length=4, choices=TIPO_CLIENTE_CHOICE, default="CNPJ")
     nome = models.CharField('Nome', max_length=50)
-    cnpj = models.CharField('E-mail', max_length=50, null=True, blank=True)
+    documento = models.CharField('Documento', max_length=50, null=True, blank=True)
     telefone = models.CharField('Telefone', max_length=30, null=True, blank=True)
     email = models.EmailField('E-mail', null=True, blank=True)
 
@@ -48,7 +53,7 @@ class Produto(BaseModel):
         null=True,
         blank=True
     )
-    codigo = models.CharField("Codigo", max_length=0, null=True, blank=True)
+    codigo = models.CharField("Codigo", max_length=20, null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria,
         on_delete=models.CASCADE,
