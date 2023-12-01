@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
-from .models import Fornecedor, Categoria
-from .forms import NovoFornecedorForm, NovaCategoriaForm
+from .models import Fornecedor, Categoria, Fabricante
+from .forms import NovoFornecedorForm, NovaCategoriaForm, NovoFabricanteForm
 
 
 class ListaFornecedorView(LoginRequiredMixin, ListView):
@@ -62,3 +62,33 @@ class DeletarCategoriaView(LoginRequiredMixin, BSModalDeleteView):
     template_name = 'produtos/deletar_categoria.html'
     success_message = 'Success: Categoria Deletada!'
     success_url = reverse_lazy('produtos:lista_categorias')
+
+# Fabricantes
+
+
+class ListaFabricantesView(LoginRequiredMixin, ListView):
+    template_name = 'produtos/lista_frabricantes.html'
+
+    def get_queryset(self):
+        return Fabricante.objects.all().order_by("nome")
+
+
+class NovoFabricanteView(LoginRequiredMixin, BSModalCreateView):
+    template_name = 'produtos/novo_fabricante.html'
+    form_class = NovoFabricanteForm
+    success_message = 'Success: Fabricante Criado!'
+    success_url = reverse_lazy('produtos:lista_fabricantes')
+
+
+class EditarFabricanteView(LoginRequiredMixin, BSModalUpdateView):
+    model = Fabricante
+    form_class = NovoFabricanteForm
+    template_name = 'produtos/novo_fabricante.html'
+    success_url = reverse_lazy('produtos:lista_fabricantes')
+
+
+class DeletarFabricanteView(LoginRequiredMixin, BSModalDeleteView):
+    model = Fabricante
+    template_name = 'produtos/deletar_fabricante.html'
+    success_message = 'Success: Categoria Deletada!'
+    success_url = reverse_lazy('produtos:lista_fabricantes')

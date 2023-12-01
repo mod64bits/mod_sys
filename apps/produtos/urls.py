@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (ListaFornecedorView, NovoFornecedorView, EditarFornecedorView, DeletarFornecedorView,
-                    ListaCategoriasView, NovaCategoriaView, EditarCategoriaView, DeletarCategoriaView
+                    ListaCategoriasView, NovaCategoriaView, EditarCategoriaView, DeletarCategoriaView,
+                    ListaFabricantesView, NovoFabricanteView, EditarFabricanteView, DeletarFabricanteView
                     )
 
 app_name = 'produtos'
@@ -15,4 +16,9 @@ urlpatterns = [
     path('categoria/nova/', NovaCategoriaView.as_view(), name='nova_categoria'),
     path('categoria/editar/<uuid:pk>/', EditarCategoriaView.as_view(), name="editar_categoria"),
     path('categoria/deletar/<uuid:pk>/', DeletarCategoriaView.as_view(), name='deletar_categoria'),
+    # Fabricantes
+    path('fabrincates/', ListaFabricantesView.as_view(), name='lista_fabricantes'),
+    path('fabrincate/nova/', NovoFabricanteView.as_view(), name='novo_fabricante'),
+    path('fabrincate/editar/<uuid:pk>/', EditarFabricanteView.as_view(), name='editar_fabricante'),
+    path('fabrincate/deletar/<uuid:pk>/', DeletarFabricanteView.as_view(), name='deletar_fabricante'),
 ]
