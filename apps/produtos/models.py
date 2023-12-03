@@ -1,5 +1,6 @@
 from django.db import models
 from apps.base.models import BaseModel
+from django.urls import reverse
 
 
 class Fornecedor(BaseModel):
@@ -17,6 +18,9 @@ class Fornecedor(BaseModel):
         verbose_name = 'Fornecedo'
         verbose_name_plural = 'Fornecedores'
         ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
 
 
 class Categoria(BaseModel):
@@ -53,7 +57,7 @@ class Produto(BaseModel):
         null=True,
         blank=True
     )
-    codigo = models.CharField("Codigo", max_length=20, null=True, blank=True)
+    codigo = models.CharField("Codigo", max_length=20, unique=True, null=True, blank=True)
     categoria = models.ForeignKey(
         Categoria,
         on_delete=models.CASCADE,
@@ -66,7 +70,11 @@ class Produto(BaseModel):
         verbose_name='Fornecedor',
         related_name='p_fornecedor'
     )
+    link_produto = models.URLField('Link Produto', null=True, blank=True)
     preco_compra = models.DecimalField('Preço de Compra', decimal_places=2, max_digits=8)
 
     def __str__(self):
         return f"{self.nome} --{self.preco_compra}"
+
+    def get_absolute_url(self):
+        return reverse('produtos:lista_produtos')

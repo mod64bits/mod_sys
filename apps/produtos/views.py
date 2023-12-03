@@ -2,8 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView
-from .models import Fornecedor, Categoria, Fabricante
+from django.views.generic.edit import CreateView
+from .models import Fornecedor, Categoria, Fabricante, Produto
 from .forms import NovoFornecedorForm, NovaCategoriaForm, NovoFabricanteForm
+from django.views.generic.edit import UpdateView
 
 
 class ListaFornecedorView(LoginRequiredMixin, ListView):
@@ -92,3 +94,22 @@ class DeletarFabricanteView(LoginRequiredMixin, BSModalDeleteView):
     template_name = 'produtos/deletar_fabricante.html'
     success_message = 'Success: Categoria Deletada!'
     success_url = reverse_lazy('produtos:lista_fabricantes')
+
+
+class ListaProdutosView(LoginRequiredMixin, ListView):
+    template_name = 'produtos/lista_produtos.html'
+
+    def get_queryset(self):
+        return Produto.objects.all().order_by("nome")
+
+
+class NovoProdutoView(CreateView):
+    model = Produto
+    fields = '__all__'
+    template_name = 'produtos/novo_produto.html'
+
+
+class EditarProdutoView(UpdateView):
+    model = Produto
+    fields = '__all__'
+    template_name = 'produtos/novo_produto.html'
