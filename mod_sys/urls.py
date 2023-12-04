@@ -6,10 +6,12 @@ from apps.dashboard import urls as dashboard_urls
 from apps.clientes import urls as clientes_urls
 from apps.ticket import urls as tickets_url
 from apps.produtos import urls as produtos_url
+from apps.servicos import urls as servicos_url
 
 urlpatterns = [
     path('', include(dashboard_urls)),
     path('produtos/', include(produtos_url)),
+    path('servicos/', include(servicos_url)),
     path('tickets/', include(tickets_url)),
     path('clientes/', include(clientes_urls)),
     path('accounts/', include('django.contrib.auth.urls')),

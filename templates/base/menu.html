@@ -74,17 +74,21 @@
                   <p>Clientes</p>
                 </a>
               </li>
+             <li class="nav-item">
+                <a href="{% url 'servicos:lista_servicos' %}" class="nav-link {% if active_servico %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Serviços</p>
+                </a>
+              </li>
+             <li class="nav-item">
+                <a href="{% url 'servicos:lista_categoria_servicos' %}" class="nav-link {% if active_categoria_servico %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Categoria Serviço</p>
+                </a>
+              </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
