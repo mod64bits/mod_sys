@@ -1,0 +1,64 @@
+<div class="col-sm-4">
+    <div class="card card-purple">
+        <div class="card-header">
+            <h3 class="card-title">{{ ticket.cliente }} {{ ticket.cliente.tipo }}: {{  ticket.cliente.documento }}</h3>
+
+            <div class="card-tools">
+                <div class="ribbon-wrapper">
+                    <div class="ribbon bg-primary">
+                        15 h
+                    </div>
+                </div>
+                <!-- Buttons, labels, and many other things can be placed here! -->
+                <!-- Here is a label for example -->
+            </div>
+            <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <address>
+                        <strong>Solicitante</strong><br>
+                        {{ ticket.solicitante }}<br>
+                        <strong>Departamento</strong><br>
+                        {{ ticket.departamento }}<br>
+                        <strong>Contato</strong><br>
+                        Telefone: {{ ticket.cliente.telefone }}<br>
+                        Email: {{ ticket.cliente.email }}<br>
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    To
+                    <address>
+                        <strong>Responsavel</strong><br>
+                        {{ ticket.responsavel }}<br>
+
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>Inicializado em</b><br>
+                    <br>
+                    <b>{{ ticket.iniciado_em }}</b><br>
+                    <b>Tempo: </b>2 dias e 4 horas<br>
+                    <b>Orcamento: </b> 968-34567
+                </div>
+                <!-- /.col -->
+            </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <div class="row no-print">
+                <div class="col-12">
+
+                    <button  class="update-atendimentoCliente btn btn-success float-right"  data-form-url="{% url 'tickets:iniciar_atendimento' ticket.pk %}"><i class="far fa-credit-card"></i> Iniciar Atendimento
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+
+</div>

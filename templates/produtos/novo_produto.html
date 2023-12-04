@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Produto</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'produtos:lista_produtos' %}">Lista de Produtos</a></li>
+                            <li class="breadcrumb-item active">{{ object.nome }}</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="container">
+            <div class="container-fluid">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Produto</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form method="post">
+                        {% csrf_token %}
+                            <div class="row">
+                                <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+                                    {% for error in form.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>{{ form.nome.label }}</label>
+                                        {% render_field form.nome class="form-control"  placeholder="Nome"%}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>{{ form.fabricante.label }}</label>
+                                        {% render_field form.fabricante class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <label>{{ form.codigo.label }}</label>
+                                        {% render_field form.codigo class="form-control"  placeholder="Codígo"%}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ form.categoria.label }}</label>
+                                        {% render_field form.categoria class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!-- textarea -->
+                                    <div class="form-group">
+                                        <label>{{ form.fornecedor.label }}</label>
+                                        {% render_field form.fornecedor class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ form.preco_compra.label }}</label>
+                                        {% render_field form.preco_compra class="form-control"  placeholder="Preco de Compra"%}
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>{{ form.link_produto.label }}</label>
+                                        {% render_field form.link_produto class="form-control"  placeholder="Link Produto"%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+    $(function () {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+    })
+
+
+
+</script>
+{% endblock scripts %}
