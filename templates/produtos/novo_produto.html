@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <div class="card card-warning">
                     <div class="card-header">
-                        <h3 class="card-title">General Elements</h3>
+                        <h3 class="card-title">Produto</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -49,7 +49,7 @@
                                     <!-- text input -->
                                     <div class="form-group">
                                         <label>{{ form.fabricante.label }}</label>
-                                        {% render_field form.fabricante class="form-control"  placeholder="Fabricante"%}
+                                        {% render_field form.fabricante class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>{{ form.categoria.label }}</label>
-                                        {% render_field form.categoria class="form-control"  placeholder="Categoria"%}
+                                        {% render_field form.categoria class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                                     <!-- textarea -->
                                     <div class="form-group">
                                         <label>{{ form.fornecedor.label }}</label>
-                                        {% render_field form.fornecedor class="form-control"  placeholder="Fornecedor"%}
+                                        {% render_field form.fornecedor class="form-control select2bs4"  type="text"  role="textbox" style="width: 100%;"%}
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -103,3 +103,19 @@
         <!-- /.content -->
     </div>
 {% endblock content %}
+
+{% block scripts %}
+    <script>
+    $(function () {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+    })
+
+
+
+</script>
+{% endblock scripts %}
