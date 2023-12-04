@@ -10,6 +10,12 @@ class ListaClientesView(ListView):
     model = Cliente
     template_name = 'clientes/lista_clientes.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_clientes'] = True
+        return context
+
 
 class NovoClienteView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'clientes/novo_cliente.html'

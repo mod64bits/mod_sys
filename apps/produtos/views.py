@@ -14,6 +14,12 @@ class ListaFornecedorView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Fornecedor.objects.all().order_by("nome")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_fornecedor'] = True
+        return context
+
 
 class NovoFornecedorView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'produtos/novo_fornecedor.html'
@@ -43,6 +49,12 @@ class ListaCategoriasView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Categoria.objects.all().order_by("nome")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_categoria'] = True
+        return context
 
 
 class NovaCategoriaView(LoginRequiredMixin, BSModalCreateView):
@@ -74,6 +86,12 @@ class ListaFabricantesView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Fabricante.objects.all().order_by("nome")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_fabricantes'] = True
+        return context
+
 
 class NovoFabricanteView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'produtos/novo_fabricante.html'
@@ -102,14 +120,32 @@ class ListaProdutosView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Produto.objects.all().order_by("nome")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_produto'] = True
+        return context
+
 
 class NovoProdutoView(CreateView):
     model = Produto
     fields = '__all__'
     template_name = 'produtos/novo_produto.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_produto'] = True
+        return context
+
 
 class EditarProdutoView(UpdateView):
     model = Produto
     fields = '__all__'
     template_name = 'produtos/novo_produto.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_produto'] = True
+        return context
