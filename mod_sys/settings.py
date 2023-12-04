@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.ticket',
     'apps.orcamentos',
     'apps.produtos',
+    'apps.servicos',
     'apps.clientes',
     'apps.dashboard',
 
