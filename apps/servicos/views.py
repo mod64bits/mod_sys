@@ -18,8 +18,7 @@ class ListaServicosView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['active_menu_servico'] = True
-        context['open_menu_servico'] = True
+        context['menu_open_cadastro'] = True
         context['active_servico'] = True
         return context
 
@@ -33,7 +32,7 @@ class NovoServicoView(LoginRequiredMixin, BSModalCreateView):
 
 class EditarServicoView(LoginRequiredMixin, BSModalUpdateView):
     model = Servico
-    template_name = 'servicos/editar_servico.html'
+    template_name = 'servicos/novo_servico.html'
     form_class = ServicoForm
     success_message = 'Success: Serviço Atualizado.'
     success_url = reverse_lazy('servicos:lista_servicos')
@@ -49,6 +48,12 @@ class DeletarServicoView(LoginRequiredMixin, BSModalDeleteView):
 class ListaCategoriaServicoView(LoginRequiredMixin, ListView):
     model = CategoriaServico
     template_name = 'servicos/lista_categoria_servico.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_cadastro'] = True
+        context['active_categoria_servico'] = True
+        return context
 
 
 class NovaCategoriaServicoView(LoginRequiredMixin, BSModalCreateView):
