@@ -1,0 +1,331 @@
+{% extends 'base/base.html' %}
+
+{% block title %}mod64bits-orçamentos{% endblock title %}
+
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Dashboard v2</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard v2</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Info boxes -->
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Orçamento</span>
+                                <span class="info-box-number">
+                  10
+                  <small>%</small>
+                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Equipamentos</span>
+                                <span class="info-box-number">41,410</span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <!-- fix for small devices only -->
+                    <div class="clearfix hidden-md-up"></div>
+
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Compra Equipamentos</span>
+                                <span class="info-box-number">760</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Lucro Equipamentos</span>
+                                <span class="info-box-number">760</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Mão de Obra</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Orçamento</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3">
+                        <div class="info-box mb-3">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Total Orçamento</span>
+                                <span class="info-box-number">2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/. container-fluid -->
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-text-width"></i>
+                                Description
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <dl>
+                                <dt>Cliente:</dt>
+                                <dd>{{ orcamento.cliente }}</dd>
+                                <dt>Validade:</dt>
+                                <dd>{{ orcamento.validade }}</dd>
+                                <dt>Status</dt>
+                                <dd>Etiam porta sem malesuada magna mollis euismod.</dd>
+                            </dl>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- ./col -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-text-width"></i>
+                                Description Horizontal
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-4">Description lists</dt>
+                                <dd class="col-sm-8">A description list is perfect for defining terms.</dd>
+                                <dt class="col-sm-4">Euismod</dt>
+                                <dd class="col-sm-8">Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</dd>
+                                <dd class="col-sm-8 offset-sm-4">Donec id elit non mi porta gravida at eget metus.</dd>
+                                <dt class="col-sm-4">Malesuada porta</dt>
+                                <dd class="col-sm-8">Etiam porta sem malesuada magna mollis euismod.</dd>
+                                <dt class="col-sm-4">Felis euismod semper eget lacinia</dt>
+                                <dd class="col-sm-8">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo
+                                    sit amet risus.
+                                </dd>
+                            </dl>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- ./col -->
+            </div>
+        </section>
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Itens do orçamento</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                            <div id="accordion">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                                Produtos. Quantidade de Produtos <span class="badge badge-success">20</span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="card-footer clearfix">
+                                                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Adicionar Produto</a>
+
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table m-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Qt.</th>
+                                                        <th>Produto</th>
+                                                        <th>Descrição</th>
+                                                        <th>Valor Unitário</th>
+                                                        <th>Total</th>
+                                                        <th>Ação</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                                        <td>Call of Duty IV</td>
+                                                        <td><span class="badge badge-success">Shipped</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                                        <td>Samsung Smart TV</td>
+                                                        <td><span class="badge badge-warning">Pending</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                        <td>iPhone 6 Plus</td>
+                                                        <td><span class="badge badge-danger">Delivered</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                        <td>Samsung Smart TV</td>
+                                                        <td><span class="badge badge-info">Processing</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                                        <td>Samsung Smart TV</td>
+                                                        <td><span class="badge badge-warning">Pending</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                                        <td>iPhone 6 Plus</td>
+                                                        <td><span class="badge badge-danger">Delivered</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                                        <td>Call of Duty IV</td>
+                                                        <td><span class="badge badge-success">Shipped</span></td>
+                                                        <td>
+                                                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-danger">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                                Collapsible Group Danger
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                            3
+                                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                                            laborum
+                                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                                            nulla
+                                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
+                                            beer
+                                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                            labore sustainable VHS.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                                Collapsible Group Success
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                            3
+                                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                                            laborum
+                                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                                            nulla
+                                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
+                                            beer
+                                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                            labore sustainable VHS.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+
+{% endblock content %}
