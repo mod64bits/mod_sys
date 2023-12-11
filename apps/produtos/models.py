@@ -1,3 +1,5 @@
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 from django.db import models
 from apps.base.models import BaseModel
 from django.urls import reverse
@@ -71,7 +73,8 @@ class Produto(BaseModel):
         related_name='p_fornecedor'
     )
     link_produto = models.URLField('Link Produto', null=True, blank=True)
-    preco_compra = models.DecimalField('Preço de Compra', decimal_places=2, max_digits=8)
+    preco_compra = models.DecimalField(max_digits=16, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
 
     def __str__(self):
         return f"{self.nome} --{self.preco_compra}"

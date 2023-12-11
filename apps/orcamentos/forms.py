@@ -1,7 +1,7 @@
 from django import forms
 from bootstrap_modal_forms.forms import BSModalModelForm
 from django_ckeditor_5.widgets import CKEditor5Widget
-from .models import InformacoesOrcamento, Orcamento
+from .models import InformacoesOrcamento, Orcamento, ItemProduto, ItemMaoDeObra
 
 
 class NovoOrcamentoForm(BSModalModelForm):
@@ -24,3 +24,15 @@ class InformacoesForm(forms.ModelForm):
                 attrs={"class": "django_ckeditor_5"}, config_name="comment"
             )
         }
+
+
+class OrcamentoItemProdutoForm(BSModalModelForm):
+    class Meta:
+        model = ItemProduto
+        exclude = ['orcamento']
+
+
+class OrcamentoItemServico(BSModalModelForm):
+    class Meta:
+        model = ItemMaoDeObra
+        exclude = ['orcamento']

@@ -1,10 +1,11 @@
 from django.db import models
 from django.urls import reverse
-
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 from apps.base.models import BaseModel
 from apps.clientes.models import Cliente
 from apps.produtos.models import Produto
-
+from apps.servicos.models import Servico
 from apps.core.ultils import Datas
 from django_ckeditor_5.fields import CKEditor5Field
 
@@ -54,9 +55,12 @@ class ItemProduto(BaseModel):
         verbose_name='Produto',
         related_name='item_produto',
     )
-    porcentagem = models.DecimalField('Porcentagem', decimal_places=2, max_digits=8, null=True, blank=True)
-    preco = models.DecimalField('Preço', decimal_places=2, max_digits=8, null=True, blank=True)
-    total = models.DecimalField('Total', decimal_places=2, max_digits=8, null=True, blank=True)
+    porcentagem = models.DecimalField('Porcentagem', max_digits=16, null=True, blank=True, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    preco = models.DecimalField("Preço de Compra", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    total = models.DecimalField("Total", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
 
     quantidade = models.PositiveIntegerField('Quantidade', default=1)
     created = models.DateTimeField('Criado em', auto_now_add=True)
@@ -69,6 +73,43 @@ class ItemProduto(BaseModel):
 
     def __str__(self):
         return f"{self.produto}  -  {self.preco}"
+
+    def get_absolute_url(self):
+        print()
+        return reverse('orcamentos:orcamento', kwargs={'pk': self.orcamento.id})
+
+
+class ItemMaoDeObra(models.Model):
+    orcamento = models.ForeignKey(
+        Orcamento,
+        on_delete=models.CASCADE,
+        verbose_name='Orçamento',
+        related_name='mao_obra_orcamento'
+    )
+    servico = models.ForeignKey(
+        Servico,
+        on_delete=models.CASCADE,
+        verbose_name='Serviço',
+        related_name='item_servico'
+    )
+    valor = models.DecimalField("Preço", max_digits=16, decimal_places=2, null=True, blank=True, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    quantidade = models.PositiveIntegerField('Quantidade', default=1)
+    total = models.DecimalField("Total", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    created = models.DateTimeField('Criado em', auto_now_add=True)
+    modified = models.DateTimeField('Modificado em', auto_now=True)
+
+    class Meta:
+        verbose_name = 'Item Serviço'
+        verbose_name_plural = 'Itens Serviços'
+        ordering = ['-created']
+
+    def __str__(self):
+        return f"{self.servico} - {self.valor}"
+
+    def get_absolute_url(self):
+        return reverse('orcamento:update_orcamento', kwargs={'pk': self.orcamento.id})
 
 
 class InformacoesOrcamento(BaseModel):

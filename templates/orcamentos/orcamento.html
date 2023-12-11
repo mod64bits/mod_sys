@@ -1,8 +1,21 @@
 {% extends 'base/base.html' %}
+{% load orcamentos_extras %}
+
 
 {% block title %}mod64bits-orçamentos{% endblock title %}
 
 {% block content %}
+    <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -182,14 +195,14 @@
                                     <div class="card-header">
                                         <h4 class="card-title w-100">
                                             <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
-                                                Produtos. Quantidade de Produtos <span class="badge badge-success">20</span>
+                                                Itens Únicos <span class="badge badge-success">{{ qt_produtos.qt_intens }}</span> Total de Intens <span class="badge badge-success">{{ qt_produtos.qt_total_itens }}</span>
                                             </a>
                                         </h4>
                                     </div>
                                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
                                             <div class="card-footer clearfix">
-                                                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Adicionar Produto</a>
+                                                <button type="button" id="add-item" class="btn btn-sm btn-info float-left" data-form-url="{% url 'orcamentos:adcionar_produto_orcamento' orcamento.id  %}">Adicionar Produto</button>
 
                                             </div>
                                             <div class="table-responsive">
@@ -198,69 +211,45 @@
                                                     <tr>
                                                         <th>Qt.</th>
                                                         <th>Produto</th>
-                                                        <th>Descrição</th>
-                                                        <th>Valor Unitário</th>
+                                                        <th>Preço de Compra</th>
+                                                        <th>Preço de Venda</th>
+                                                        <th>Lucro</th>
                                                         <th>Total</th>
                                                         <th>Ação</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                        <td>Call of Duty IV</td>
-                                                        <td><span class="badge badge-success">Shipped</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                        <td>Samsung Smart TV</td>
-                                                        <td><span class="badge badge-warning">Pending</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                        <td>iPhone 6 Plus</td>
-                                                        <td><span class="badge badge-danger">Delivered</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                        <td>Samsung Smart TV</td>
-                                                        <td><span class="badge badge-info">Processing</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                                        <td>Samsung Smart TV</td>
-                                                        <td><span class="badge badge-warning">Pending</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                                        <td>iPhone 6 Plus</td>
-                                                        <td><span class="badge badge-danger">Delivered</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                                        <td>Call of Duty IV</td>
-                                                        <td><span class="badge badge-success">Shipped</span></td>
-                                                        <td>
-                                                            <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                                                        </td>
-                                                    </tr>
+                                                    {% for item in orcamento.produto_orcamento.all %}
+                                                        <tr>
+                                                            <td>{{ item.quantidade }}</td>
+                                                            <td>{{ item.produto.nome }}</td>
+                                                            <td>{{ item.produto.preco_compra }}</td>
+                                                            <td>{{ item.preco }}</td>
+                                                            <td>
+                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.produto.preco_compra|lucro:item.preco|safe }}</div>
+                                                            </td>
+                                                            <td>{{ item.total }}</td>
+                                                            <td>
+                                                            <td class="project-actions text-right">
+                                                                <button class="read-item btn btn-primary btn-sm" data-form-url="{% url 'orcamentos:infor_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-folder">
+                                                                    </i>
+                                                                    Ver
+                                                                </button>
+                                                                <button type="button" class="update-item btn btn-info btn-sm" data-form-url="{% url 'orcamentos:editar_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-pencil-alt">
+                                                                    </i>
+                                                                    Editar
+                                                                </button>
+                                                                <button type="button" class="delete-item btn btn-danger btn-sm" data-form-url="{% url 'orcamentos:deletar_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-trash">
+                                                                    </i>
+                                                                    Apagar
+                                                                </button>
+                                                            </td>
+
+                                                        </tr>
+                                                    {% endfor %}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -323,9 +312,43 @@
                 </div>
             </div>
         </section>
-
-
-
     </div>
 
 {% endblock content %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function addItemModalForm() {
+                $("#add-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url")});
+                });
+            }
+            addItemModalForm();
+
+            function updateItemModalForm() {
+                $(".update-item").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateItemModalForm();
+
+            function deleteClienteForm() {
+                $(".delete-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteClienteForm();
+
+            $(".read-item").each(function () {
+            $(this).modalForm({formURL: $(this).data("form-url")});
+    });
+        });
+    </script>
+{% endblock scripts %}

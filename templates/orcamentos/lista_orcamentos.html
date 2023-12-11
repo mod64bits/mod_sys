@@ -66,15 +66,13 @@
                                     <tbody>
                                     {% for orcamento in object_list %}
                                         <tr>
-
-                                            <td>{{ orcamento.cliente }}</td>
+                                            <td><a href="{% url 'orcamentos:orcamento' orcamento.id %}">{{ orcamento.cliente }}</a></td>
                                             <td>{{ orcamento.status }}</td>
                                             <td>{{ orcamento.validade }}</td>
                                             <td>{{ orcamento.total }}</td>
                                             <td>{{ orcamento.total_compra }}</td>
                                             <td>{{ orcamento.total_lucro }}</td>
                                             <td>Ação</td>
-
                                         </tr>
                                     {% endfor %}
                                     </tbody>
