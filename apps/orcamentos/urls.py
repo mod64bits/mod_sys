@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (ListaOrcamentoView, NovoOrcamentoView, OrcamentoView, AdcionarProdutoView, EditarProdutoView,
-                    DeleteItemView, VerInforProdutoView)
+                    DeleteItemView, VerInforProdutoView, AdicionarItemServicoView, EditarItemServicoView)
 
 app_name = 'orcamentos'
 
@@ -14,4 +14,7 @@ urlpatterns = [
     path('editar/produto/<uuid:pk>/', EditarProdutoView.as_view(), name='editar_produto_orcamento'),
     path('deletar/produto/<uuid:pk>/', DeleteItemView.as_view(), name='deletar_produto_orcamento'),
     path('informacoes/produto/<uuid:pk>/', VerInforProdutoView.as_view(), name='infor_produto_orcamento'),
+    # Item serviços
+    path('adcionar/servico/<uuid:pk>/', AdicionarItemServicoView.as_view(), name='adcionar_servico_orcamento'),
+    path('editar/servico/<uuid:pk>/', EditarItemServicoView.as_view(), name='editar_servico_orcamento'),
 ]

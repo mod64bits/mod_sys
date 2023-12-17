@@ -7,7 +7,6 @@ from apps.clientes.models import Cliente
 from apps.produtos.models import Produto
 from apps.servicos.models import Servico
 from apps.core.ultils import Datas
-from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Orcamento(BaseModel):
@@ -55,12 +54,13 @@ class ItemProduto(BaseModel):
         verbose_name='Produto',
         related_name='item_produto',
     )
-    porcentagem = models.DecimalField('Porcentagem', max_digits=16, null=True, blank=True, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    porcentagem = models.DecimalField('Porcentagem', max_digits=16, null=True, blank=True, decimal_places=2,
+                                      validators=[
+                                          MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     preco = models.DecimalField("Preço de Compra", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+        MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     total = models.DecimalField("Total", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+        MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
 
     quantidade = models.PositiveIntegerField('Quantidade', default=1)
     created = models.DateTimeField('Criado em', auto_now_add=True)
@@ -75,11 +75,10 @@ class ItemProduto(BaseModel):
         return f"{self.produto}  -  {self.preco}"
 
     def get_absolute_url(self):
-        print()
         return reverse('orcamentos:orcamento', kwargs={'pk': self.orcamento.id})
 
 
-class ItemMaoDeObra(models.Model):
+class ItemMaoDeObra(BaseModel):
     orcamento = models.ForeignKey(
         Orcamento,
         on_delete=models.CASCADE,
@@ -92,13 +91,12 @@ class ItemMaoDeObra(models.Model):
         verbose_name='Serviço',
         related_name='item_servico'
     )
+    descricao = models.TextField('Descrição', null=True, blank=True)
     valor = models.DecimalField("Preço", max_digits=16, decimal_places=2, null=True, blank=True, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+        MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     quantidade = models.PositiveIntegerField('Quantidade', default=1)
     total = models.DecimalField("Total", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    created = models.DateTimeField('Criado em', auto_now_add=True)
-    modified = models.DateTimeField('Modificado em', auto_now=True)
+        MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
 
     class Meta:
         verbose_name = 'Item Serviço'
@@ -119,10 +117,7 @@ class InformacoesOrcamento(BaseModel):
         verbose_name='Descricao'
     )
     titulo = models.CharField("Descrição")
-    descricao = CKEditor5Field('Text', config_name='extends')
+    descricao = models.TextField('Descrição', null=True, blank=True)
 
     def __str__(self):
         return self.titulo
-
-
-

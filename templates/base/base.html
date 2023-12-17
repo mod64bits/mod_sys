@@ -1,5 +1,8 @@
 {% load static %}
-
+{% block extrahead %}
+<script>window.CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/';</script>
+{{ block.super }}
+{% endblock %}
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -22,6 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'base/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
     <link rel="stylesheet" href="{% static 'base/plugins/select2/css/select2.min.css' %}">
 <link rel="stylesheet" href="{% static 'base/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+
 
     {% block css %}
     {% endblock css %}
@@ -309,6 +313,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{% static 'base/plugins/bootstrap-switch/js/bootstrap-switch.min.js' %}"></script>
     <script src="{% static 'base/plugins/bs-stepper/js/bs-stepper.min.js' %}"></script>
     <script src="{% static 'base/plugins/select2/js/select2.full.min.js' %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
 {% block scripts %}
 {% endblock scripts %}

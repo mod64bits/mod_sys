@@ -10,7 +10,7 @@ from apps.servicos import urls as servicos_url
 from apps.orcamentos import urls as orcamentos_url
 
 urlpatterns = [
-    path("ckeditor5/", include('django_ckeditor_5.urls'), name="ck_editor_5_upload_file"),
+
     path('', include(dashboard_urls)),
     path('orcamentos/', include(orcamentos_url)),
     path('produtos/', include(produtos_url)),
@@ -18,5 +18,6 @@ urlpatterns = [
     path('tickets/', include(tickets_url)),
     path('clientes/', include(clientes_urls)),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,6 +11,12 @@
         </div>
     </div>
 
+     <div class="modal fade" role="dialog" id="modal-xl">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
     <div class="modal fade"  role="dialog" id="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>
@@ -47,8 +53,8 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Orçamento</span>
                                 <span class="info-box-number">
-                  10
-                  <small>%</small>
+                  {{ orcamento.total }}
+
                 </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -62,7 +68,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Equipamentos</span>
-                                <span class="info-box-number">41,410</span>
+                                <span class="info-box-number">{{ orcamento.total_equipamentos }}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -78,7 +84,7 @@
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Compra Equipamentos</span>
-                                <span class="info-box-number">760</span>
+                                <span class="info-box-number">{{ orcamento.total_compra }}</span>
                             </div>
                         </div>
                     </div>
@@ -87,7 +93,7 @@
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Lucro Equipamentos</span>
-                                <span class="info-box-number">760</span>
+                                <span class="info-box-number">{{ lucro_equipamentos }}</span>
                             </div>
                         </div>
                     </div>
@@ -96,27 +102,18 @@
                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text">Mão de Obra</span>
-                                <span class="info-box-number">2,000</span>
+                                <span class="info-box-number">{{ orcamento.total_mao_de_obra }}</span>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                             <div class="info-box-content">
-                                <span class="info-box-text">Total Orçamento</span>
-                                <span class="info-box-number">2,000</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Total Orçamento</span>
-                                <span class="info-box-number">2,000</span>
+                                <span class="info-box-text">Total Lucro</span>
+                                <span class="info-box-number">{{ orcamento.total_lucro }}</span>
                             </div>
                         </div>
                     </div>
@@ -195,11 +192,11 @@
                                     <div class="card-header">
                                         <h4 class="card-title w-100">
                                             <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
-                                                Itens Únicos <span class="badge badge-success">{{ qt_produtos.qt_intens }}</span> Total de Intens <span class="badge badge-success">{{ qt_produtos.qt_total_itens }}</span>
+                                                <h3>PRODUTOS</h3>   Itens Únicos <span class="badge badge-success">{{ qt_produtos.qt_intens }}</span> Total de Intens <span class="badge badge-success">{{ qt_produtos.qt_total_itens }}</span>
                                             </a>
                                         </h4>
                                     </div>
-                                    <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                    <div id="collapseOne" class="collapse {% if qt_produtos.qt_intens %}show{% endif %}" data-parent="#accordion">
                                         <div class="card-body">
                                             <div class="card-footer clearfix">
                                                 <button type="button" id="add-item" class="btn btn-sm btn-info float-left" data-form-url="{% url 'orcamentos:adcionar_produto_orcamento' orcamento.id  %}">Adicionar Produto</button>
@@ -260,23 +257,53 @@
                                     <div class="card-header">
                                         <h4 class="card-title w-100">
                                             <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
-                                                Collapsible Group Danger
+                                                MÃO DE OBRA E SERVIÇOS
                                             </a>
                                         </h4>
                                     </div>
                                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                                         <div class="card-body">
-                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
-                                            3
-                                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                                            laborum
-                                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
-                                            nulla
-                                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                                            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                                            beer
-                                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
-                                            labore sustainable VHS.
+                                             <div class="card-footer clearfix">
+                                                <button type="button" id="add-servico" class="btn btn-sm btn-info float-left" data-form-url="{% url 'orcamentos:adcionar_servico_orcamento' orcamento.id  %}">Adicionar Serviço</button>
+
+                                            </div>
+                                             <div class="table-responsive">
+                                                <table class="table m-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Qt.</th>
+                                                        <th>Nome</th>
+                                                        <th>Descrição</th>
+                                                        <th>Valor</th>
+                                                        <th>Total</th>
+                                                        <th>Ação</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for item_servicos in orcamento.mao_obra_orcamento.all %}
+                                                        <tr>
+                                                            <td>{{ item_servicos.quantidade }}</td>
+                                                            <td>{{ item_servicos.servico.nome }}</td>
+                                                            <td>{{ item_servicos.descricao|safe }}</td>
+                                                            <td>{{ item_servicos.valor }}</td>
+                                                            <td>{{ item_servicos.total }}</td>
+
+                                                            <td>
+                                                            <td class="project-actions text-right">
+
+                                                               <button type="button" class="update-servico btn btn-info btn-sm" data-form-url="{% url 'orcamentos:editar_servico_orcamento' item_servicos.id %}">
+                                                                    <i class="fas fa-pencil-alt">
+                                                                    </i>
+                                                                    Editar
+                                                                </button>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -347,8 +374,27 @@
             deleteClienteForm();
 
             $(".read-item").each(function () {
-            $(this).modalForm({formURL: $(this).data("form-url")});
-    });
+                $(this).modalForm({formURL: $(this).data("form-url")});
+            });
+            function addServicoModalForm() {
+                $("#add-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                         modalID: "#modal-xl"
+                    });
+                });
+            }
+            addServicoModalForm();
+            function updateServicoModalForm() {
+                $(".update-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-xl",
+                    });
+                });
+            }
+            updateServicoModalForm()
         });
     </script>
 {% endblock scripts %}

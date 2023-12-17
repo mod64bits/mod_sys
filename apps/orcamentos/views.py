@@ -6,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic.list import ListView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalReadView, BSModalDeleteView
 from .models import Orcamento, ItemProduto, ItemMaoDeObra
-from .forms import NovoOrcamentoForm, OrcamentoItemProdutoForm
+from .forms import NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico
 
 
 class ListaOrcamentoView(LoginRequiredMixin, ListView):
@@ -40,6 +40,7 @@ class OrcamentoView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['orcamento'] = Orcamento.objects.get(id=kwargs['pk'])
         context['qt_produtos'] = self.quantidade_itens
+        context['lucro_equipamentos'] = context['orcamento'].total_equipamentos - context['orcamento'].total_compra
 
         return context
 
@@ -131,13 +132,47 @@ class VerInforProdutoView(LoginRequiredMixin, BSModalReadView):
 
         return context
 
-
-
     def valor_porcentagem(self, percentual, valor_compra):
         _percentual = percentual / decimal.Decimal(100)
         aumento = decimal.Decimal(_percentual) * valor_compra
         total = decimal.Decimal(valor_compra + aumento)
         return total
+
+
+class AdicionarItemServicoView(LoginRequiredMixin, BSModalCreateView):
+    model = ItemMaoDeObra
+    template_name = 'orcamentos/adcionar_item_servico.html'
+    form_class = OrcamentoItemServico
+
+    def form_valid(self, form):
+        self.orcamento = Orcamento.objects.get(id=self.kwargs['pk'])
+        qt = form.instance.quantidade
+
+        if ItemMaoDeObra.objects.filter(orcamento=self.orcamento).exists():
+            produto = ItemMaoDeObra.objects.get(orcamento=self.orcamento)
+            form.instance = produto
+            form.instance.quantidade += qt
+        form.instance.orcamento = self.orcamento
+
+        form.instance.total = decimal.Decimal(form.instance.valor * form.instance.quantidade)
+
+        return super(AdicionarItemServicoView, self).form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('orcamentos:orcamento', kwargs={'pk': self.orcamento.pk})
+
+
+class EditarItemServicoView(LoginRequiredMixin, BSModalUpdateView):
+    model = ItemMaoDeObra
+    template_name = 'orcamentos/adcionar_item_servico.html'
+    form_class = OrcamentoItemServico
+
+    def form_valid(self, form):
+        form.instance.total = decimal.Decimal(form.instance.preco * form.instance.quantidade)
+        return super(EditarItemServicoView, self).form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('orcamentos:orcamento', kwargs={'pk': self.orcamento.pk})
 
 
 def update_total_orcamento(sender, instance, signal, *args, **kwargs):
