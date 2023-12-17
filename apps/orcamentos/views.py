@@ -175,6 +175,25 @@ class EditarItemServicoView(LoginRequiredMixin, BSModalUpdateView):
         return reverse_lazy('orcamentos:orcamento', kwargs={'pk': self.orcamento.pk})
 
 
+class InformacoesServicosView(LoginRequiredMixin, BSModalReadView):
+    model = ItemMaoDeObra
+    template_name = 'orcamentos/informacoes_servicos.html'
+
+    # def get_context_data(self, **kwargs):
+    #     obj = self.get_object()
+    #     context = super().get_context_data(**kwargs)
+    #     context['total_und'] = obj.preco - obj.produto.preco_compra
+    #     context['l_total'] = (obj.preco - obj.produto.preco_compra) * obj.quantidade
+    #
+    #     return context
+
+    def valor_porcentagem(self, percentual, valor_compra):
+        _percentual = percentual / decimal.Decimal(100)
+        aumento = decimal.Decimal(_percentual) * valor_compra
+        total = decimal.Decimal(valor_compra + aumento)
+        return total
+
+
 def update_total_orcamento(sender, instance, signal, *args, **kwargs):
     orcamento = instance.orcamento
     total_produtos = 0

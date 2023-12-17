@@ -290,6 +290,11 @@
 
                                                             <td>
                                                             <td class="project-actions text-right">
+                                                            <button class="read-servico btn btn-primary btn-sm" data-form-url="{% url 'orcamentos:infor_servico_orcamento' item_servicos.pk %}">
+                                                                    <i class="fas fa-folder">
+                                                                    </i>
+                                                                    Ver
+                                                                </button>
 
                                                                <button type="button" class="update-servico btn btn-info btn-sm" data-form-url="{% url 'orcamentos:editar_servico_orcamento' item_servicos.id %}">
                                                                     <i class="fas fa-pencil-alt">
@@ -395,6 +400,12 @@
                 });
             }
             updateServicoModalForm()
+             $(".read-servico").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    modalID: "#modal-xl",
+                });
+            });
         });
     </script>
 {% endblock scripts %}
