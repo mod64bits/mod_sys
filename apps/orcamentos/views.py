@@ -148,9 +148,9 @@ class AdicionarItemServicoView(LoginRequiredMixin, BSModalCreateView):
         self.orcamento = Orcamento.objects.get(id=self.kwargs['pk'])
         qt = form.instance.quantidade
 
-        if ItemMaoDeObra.objects.filter(orcamento=self.orcamento).exists():
-            produto = ItemMaoDeObra.objects.get(orcamento=self.orcamento)
-            form.instance = produto
+        if ItemMaoDeObra.objects.filter(servico_id=form.instance.id).exists():
+            servico = ItemMaoDeObra.objects.get(produto_id=form.instance.id, orcamento=self.orcamento)
+            form.instance = servico
             form.instance.quantidade += qt
         form.instance.orcamento = self.orcamento
 
@@ -168,7 +168,8 @@ class EditarItemServicoView(LoginRequiredMixin, BSModalUpdateView):
     form_class = OrcamentoItemServico
 
     def form_valid(self, form):
-        form.instance.total = decimal.Decimal(form.instance.preco * form.instance.quantidade)
+        self.orcamento = self.object.orcamento
+        form.instance.total = decimal.Decimal(form.instance.valor * form.instance.quantidade)
         return super(EditarItemServicoView, self).form_valid(form)
 
     def get_success_url(self, **kwargs):
@@ -179,19 +180,15 @@ class InformacoesServicosView(LoginRequiredMixin, BSModalReadView):
     model = ItemMaoDeObra
     template_name = 'orcamentos/informacoes_servicos.html'
 
-    # def get_context_data(self, **kwargs):
-    #     obj = self.get_object()
-    #     context = super().get_context_data(**kwargs)
-    #     context['total_und'] = obj.preco - obj.produto.preco_compra
-    #     context['l_total'] = (obj.preco - obj.produto.preco_compra) * obj.quantidade
-    #
-    #     return context
 
-    def valor_porcentagem(self, percentual, valor_compra):
-        _percentual = percentual / decimal.Decimal(100)
-        aumento = decimal.Decimal(_percentual) * valor_compra
-        total = decimal.Decimal(valor_compra + aumento)
-        return total
+class DeleteServicoView(LoginRequiredMixin, BSModalDeleteView):
+    model = ItemMaoDeObra
+    template_name = 'orcamentos/delete_servico.html'
+    success_message = 'Success: Categoria excluída com sucesso.'
+
+    def get_success_url(self):
+        orcamento = self.get_object()
+        return reverse('orcamentos:orcamento', kwargs={'pk': orcamento.orcamento.id})
 
 
 def update_total_orcamento(sender, instance, signal, *args, **kwargs):

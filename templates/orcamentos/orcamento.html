@@ -301,6 +301,11 @@
                                                                     </i>
                                                                     Editar
                                                                 </button>
+                                                            <button type="button" class="delete-servico btn btn-danger btn-sm" data-form-url="{% url 'orcamentos:deletar_servico_orcamento' item_servicos.pk %}">
+                                                                    <i class="fas fa-trash">
+                                                                    </i>
+                                                                    Apagar
+                                                                </button>
 
                                                             </td>
 
@@ -406,6 +411,13 @@
                     modalID: "#modal-xl",
                 });
             });
+            function deleteServicoForm() {
+                $(".delete-servico").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteServicoForm();
         });
     </script>
 {% endblock scripts %}
