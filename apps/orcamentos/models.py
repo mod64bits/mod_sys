@@ -31,6 +31,7 @@ class Orcamento(BaseModel):
     total_mao_de_obra = models.DecimalField('Total Mão de Obra', decimal_places=2, max_digits=8, null=True, blank=True)
     total_lucro = models.DecimalField('Total Lucro', decimal_places=2, max_digits=8, null=True, blank=True)
     total_compra = models.DecimalField('Total Compra', decimal_places=2, max_digits=8, null=True, blank=True)
+    descricao = models.TextField("Descrição", null=True, blank=True)
     created = models.DateTimeField('Criado em', auto_now_add=True)
     modified = models.DateTimeField('Modificado em', auto_now=True)
 

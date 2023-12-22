@@ -2,6 +2,7 @@ from django import forms
 from bootstrap_modal_forms.forms import BSModalModelForm
 from ckeditor.widgets import CKEditorWidget
 from .models import InformacoesOrcamento, Orcamento, ItemProduto, ItemMaoDeObra
+from apps.clientes.models import Cliente
 
 
 class NovoOrcamentoForm(BSModalModelForm):
@@ -34,3 +35,10 @@ class OrcamentoItemServico(BSModalModelForm):
         model = ItemMaoDeObra
         exclude = ['orcamento']
 
+
+class GerarOrcamentoForm(forms.ModelForm):
+    descricao = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Orcamento
+        fields = ['cliente', 'descricao']

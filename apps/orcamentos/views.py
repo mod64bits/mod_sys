@@ -1,12 +1,14 @@
 import decimal
 from django.db.models import signals
 from django.contrib.auth.mixins import LoginRequiredMixin
+from decimal import Decimal
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
 from django.views.generic.list import ListView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalReadView, BSModalDeleteView
 from .models import Orcamento, ItemProduto, ItemMaoDeObra
-from .forms import NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico
+from .forms import NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico, GerarOrcamentoForm
+from django.views.generic.edit import CreateView
 
 
 class ListaOrcamentoView(LoginRequiredMixin, ListView):
@@ -40,9 +42,15 @@ class OrcamentoView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['orcamento'] = Orcamento.objects.get(id=kwargs['pk'])
         context['qt_produtos'] = self.quantidade_itens
-        context['lucro_equipamentos'] = context['orcamento'].total_equipamentos - context['orcamento'].total_compra
-
+        context['lucro_equipamentos'] = self.total_lucro_equipamentos(context['orcamento'].total_equipamentos,
+                                                                      context['orcamento'].total_compra)
         return context
+
+    def total_lucro_equipamentos(self, total_equipamentos, total_compra):
+        equipamentos_compra = total_compra if total_compra else Decimal(0.00)
+        equipamentos_venda = total_equipamentos if total_equipamentos else Decimal(0.00)
+
+        return Decimal(equipamentos_venda - equipamentos_compra)
 
     @property
     def quantidade_itens(self):
@@ -189,6 +197,11 @@ class DeleteServicoView(LoginRequiredMixin, BSModalDeleteView):
     def get_success_url(self):
         orcamento = self.get_object()
         return reverse('orcamentos:orcamento', kwargs={'pk': orcamento.orcamento.id})
+
+
+class GerarOrcamentoView(CreateView):
+    form_class = GerarOrcamentoForm
+    template_name = 'orcamentos/gerar_orcamento.html'
 
 
 def update_total_orcamento(sender, instance, signal, *args, **kwargs):
