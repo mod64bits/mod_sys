@@ -1,0 +1,33 @@
+{% load widget_tweaks %}
+
+<div class="modal-header">
+    <h3 class="modal-title">Informações Serviços</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-text-width"></i>
+                {{ object.servico }}
+            </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <blockquote>
+                 <p>Valor: {{ object.valor }} Quantidade: {{ object.quantidade }} Total: {{ object.total }}</p>
+            </blockquote>
+            <blockquote class="quote-secondary">
+                  {{ object.descricao|safe }}
+                </blockquote>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

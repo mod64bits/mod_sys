@@ -1,0 +1,467 @@
+{% extends 'base/base.html' %}
+{% load orcamentos_extras %}
+
+
+{% block title %}mod64bits-orçamentos{% endblock title %}
+
+{% block content %}
+     <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" id="modal-xl">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+     <div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+     <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ orcamento.cliente }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Orçamento/{{ orcamento.cliente }}</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Orçamento</span>
+                            <span class="info-box-number">
+                  {{ orcamento.total|default:"0.00" }}
+
+                </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Equipamentos</span>
+                            <span class="info-box-number">{{ orcamento.total_equipamentos|default:"0.00" }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Compra Equipamentos</span>
+                            <span class="info-box-number">{{ orcamento.total_compra|default:"0.00" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Lucro Equipamentos</span>
+                            <span class="info-box-number">{{ lucro_equipamentos|default:"0.00" }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Mão de Obra</span>
+                            <span class="info-box-number">{{ orcamento.total_mao_de_obra|default:"0.00" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Lucro</span>
+                            <span class="info-box-number">{{ orcamento.total_lucro|default:"0.00" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/. container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="row">
+        <div class="col-md-12">
+            <!-- Box Comment -->
+            <div class="card card-widget">
+                <div class="card-header">
+                    <div class="user-block">
+                        <div class="row">
+                            <div class="flex-column">
+                                <span class="username"><a href="#">{{ orcamento.cliente.nome }}</a></span>
+                                <span class="description">Documento: {{ orcamento.cliente.documento  }}</span>
+                            </div>
+                            <div class="flex-column">
+                                <span class="username"><a href="#">Documento</a></span>
+                                <span class="description">{{ orcamento.cliente.telefone  }}</span>
+                                <span class="description"><a href="#">{{ orcamento.cliente.email }}</a></span>
+                            </div>
+                            <div class="flex-column">
+                                <span class="username"><a href="#">Informações</a></span>
+                                <span class="description">Validade: {{ orcamento.validade  }}</span>
+                                <span class="description">Status: {{ orcamento.status|status|safe }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.user-block -->
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" title="Mark as read">
+                            <i class="far fa-circle"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Descrição</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                                    <div id="accordion">
+                                        <div class="card card-primary">
+                                            <div class="card-header">
+
+                                                <h4 class="card-title w-100">
+                                                    <a class="d-block w-100" data-toggle="collapse" href="#informacoes">
+                                                        Informações Orçamento
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="informacoes" class="collapse" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="card-footer clearfix">
+                                                        <a href="{% url 'orcamentos:editar_descricao_orcamento' orcamento.id %}"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Editar Descrição</a>
+                                                    </div>
+                                                    <div class="attachment-block clearfix">
+
+
+                                                        <div class="attachment-pushed">
+                                                            <div class="attachment-text">
+                                                                {{ orcamento.descricao|safe }}
+                                                            </div>
+                                                            <!-- /.attachment-text -->
+                                                        </div>
+                                                        <!-- /.attachment-pushed -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- /.col -->
+                    </div>
+
+
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+
+
+    </div>
+    </section>
+    <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Itens do orçamento</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                            <div id="accordion">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                                <h3>PRODUTOS</h3>   Itens Únicos <span class="badge badge-success">{{ qt_produtos.qt_intens }}</span> Total de Intens <span class="badge badge-success">{{ qt_produtos.qt_total_itens }}</span>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="collapse {% if qt_produtos.qt_intens %}show{% endif %}" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="card-footer clearfix">
+                                                <button type="button" id="add-item" class="btn btn-sm btn-info float-left" data-form-url="{% url 'orcamentos:adcionar_produto_orcamento' orcamento.id  %}">Adicionar Produto</button>
+
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table m-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Qt.</th>
+                                                        <th>Produto</th>
+                                                        <th>Preço de Compra</th>
+                                                        <th>Preço de Venda</th>
+                                                        <th>Lucro</th>
+                                                        <th>Total</th>
+                                                        <th>Ação</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for item in orcamento.produto_orcamento.all %}
+                                                        <tr>
+                                                            <td>{{ item.quantidade }}</td>
+                                                            <td>{{ item.produto.nome }}</td>
+                                                            <td>{{ item.produto.preco_compra }}</td>
+                                                            <td>{{ item.preco }}</td>
+                                                            <td>
+                                                                <div class="sparkbar" data-color="#00a65a" data-height="20">{{ item.produto.preco_compra|lucro:item.preco|safe }}</div>
+                                                            </td>
+                                                            <td>{{ item.total }}</td>
+                                                            <td>
+                                                            <td class="project-actions text-right">
+                                                                <button class="read-item btn btn-primary btn-sm" data-form-url="{% url 'orcamentos:infor_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-folder">
+                                                                    </i>
+                                                                    Ver
+                                                                </button>
+                                                                <button type="button" class="update-item btn btn-info btn-sm" data-form-url="{% url 'orcamentos:editar_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-pencil-alt">
+                                                                    </i>
+                                                                    Editar
+                                                                </button>
+                                                                <button type="button" class="delete-item btn btn-danger btn-sm" data-form-url="{% url 'orcamentos:deletar_produto_orcamento' item.pk %}">
+                                                                    <i class="fas fa-trash">
+                                                                    </i>
+                                                                    Apagar
+                                                                </button>
+                                                            </td>
+
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-danger">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                                MÃO DE OBRA E SERVIÇOS
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <div class="card-footer clearfix">
+                                                <button type="button" id="add-servico" class="btn btn-sm btn-info float-left" data-form-url="{% url 'orcamentos:adcionar_servico_orcamento' orcamento.id  %}">Adicionar Serviço</button>
+
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table class="table m-0">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Qt.</th>
+                                                        <th>Nome</th>
+                                                        <th>Descrição</th>
+                                                        <th>Valor</th>
+                                                        <th>Total</th>
+                                                        <th>Ação</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for item_servicos in orcamento.mao_obra_orcamento.all %}
+                                                        <tr>
+                                                            <td>{{ item_servicos.quantidade }}</td>
+                                                            <td>{{ item_servicos.servico.nome }}</td>
+                                                            <td>{{ item_servicos.descricao|safe }}</td>
+                                                            <td>{{ item_servicos.valor }}</td>
+                                                            <td>{{ item_servicos.total }}</td>
+
+                                                            <td>
+                                                            <td class="project-actions text-right">
+                                                                <button class="read-servico btn btn-primary btn-sm" data-form-url="{% url 'orcamentos:infor_servico_orcamento' item_servicos.pk %}">
+                                                                    <i class="fas fa-folder">
+                                                                    </i>
+                                                                    Ver
+                                                                </button>
+
+                                                                <button type="button" class="update-servico btn btn-info btn-sm" data-form-url="{% url 'orcamentos:editar_servico_orcamento' item_servicos.id %}">
+                                                                    <i class="fas fa-pencil-alt">
+                                                                    </i>
+                                                                    Editar
+                                                                </button>
+                                                                <button type="button" class="delete-servico btn btn-danger btn-sm" data-form-url="{% url 'orcamentos:deletar_servico_orcamento' item_servicos.pk %}">
+                                                                    <i class="fas fa-trash">
+                                                                    </i>
+                                                                    Apagar
+                                                                </button>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <h4 class="card-title w-100">
+                                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                                Collapsible Group Success
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid.
+                                            3
+                                            wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+                                            laborum
+                                            eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee
+                                            nulla
+                                            assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                            nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
+                                            beer
+                                            farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                            labore sustainable VHS.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function addItemModalForm() {
+                $("#add-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url")});
+                });
+            }
+            addItemModalForm();
+
+            function updateItemModalForm() {
+                $(".update-item").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateItemModalForm();
+
+            function deleteClienteForm() {
+                $(".delete-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteClienteForm();
+
+            $(".read-item").each(function () {
+                $(this).modalForm({formURL: $(this).data("form-url")});
+            });
+            function addServicoModalForm() {
+                $("#add-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        modalID: "#modal-xl"
+                    });
+                });
+            }
+            addServicoModalForm();
+            function updateServicoModalForm() {
+                $(".update-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-xl",
+                    });
+                });
+            }
+            updateServicoModalForm()
+            $(".read-servico").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    modalID: "#modal-xl",
+                });
+            });
+            function deleteServicoForm() {
+                $(".delete-servico").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteServicoForm();
+        });
+    </script>
+{% endblock scripts %}

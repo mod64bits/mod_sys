@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
       <img src="{% static 'base/dist/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">modbits</span>
+      <span class="brand-text font-weight-light">mod64bits</span>
     </a>
 
     <!-- Sidebar -->
@@ -37,7 +37,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item {% if menu_open_cadastro %}menu-open{% endif%}">
             <a href="#" class="nav-link {% if menu_open_cadastro %}active{% endif %}">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas nav-icon  fa-edit"></i>
               <p>
                 Cadastros
                 <i class="right fas fa-angle-left"></i>
@@ -88,6 +88,31 @@
               </li>
             </ul>
           </li>
+
+            <li class="nav-item {% if menu_open_orcamento %}menu-open{% endif%}">
+            <a href="#" class="nav-link {% if menu_open_orcamento %}active{% endif %}">
+              <i class="nav-icon fas nav-icon  fa-file-alt"></i>
+              <p>
+                Orçamentos
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'orcamentos:lista_orcamento' %}" class="nav-link  {% if active_orcamentos %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Lista</p>
+                </a>
+              </li>
+            <li class="nav-item">
+                <a href="{% url 'produtos:lista_fornecedores' %}" class="nav-link  {% if active_orcamentos %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Novo</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
 
         </ul>
       </nav>
