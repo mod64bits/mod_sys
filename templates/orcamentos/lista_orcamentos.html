@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load orcamentos_extras %}
 
 {% block title %}mod64bits-orçamentos{% endblock title %}
 
@@ -67,7 +68,7 @@
                                     {% for orcamento in object_list %}
                                         <tr>
                                             <td><a href="{% url 'orcamentos:orcamento' orcamento.id %}">{{ orcamento.cliente }}</a></td>
-                                            <td>{{ orcamento.status }}</td>
+                                            <td>{{ orcamento.status|status|safe }}</td>
                                             <td>{{ orcamento.validade }}</td>
                                             <td>{{ orcamento.total }}</td>
                                             <td>{{ orcamento.total_compra }}</td>

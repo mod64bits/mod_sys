@@ -5,15 +5,23 @@ from decimal import Decimal
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy, reverse
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalReadView, BSModalDeleteView
 from .models import Orcamento, ItemProduto, ItemMaoDeObra
-from .forms import NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico, GerarOrcamentoForm
+from .forms import (NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico, GerarOrcamentoForm,
+                    EditarDescricaoOrcamentoForm)
 from django.views.generic.edit import CreateView
 
 
 class ListaOrcamentoView(LoginRequiredMixin, ListView):
     model = Orcamento
     template_name = 'orcamentos/lista_orcamentos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu_open_orcamento'] = True
+        context['active_orcamentos'] = True
+        return context
 
 
 class NovoOrcamentoView(LoginRequiredMixin, BSModalCreateView):
@@ -199,9 +207,15 @@ class DeleteServicoView(LoginRequiredMixin, BSModalDeleteView):
         return reverse('orcamentos:orcamento', kwargs={'pk': orcamento.orcamento.id})
 
 
-class GerarOrcamentoView(CreateView):
+class GerarOrcamentoView(LoginRequiredMixin, CreateView):
     form_class = GerarOrcamentoForm
     template_name = 'orcamentos/gerar_orcamento.html'
+
+
+class EditarDescricaoOrcamentoView(LoginRequiredMixin, UpdateView):
+    model = Orcamento
+    form_class = EditarDescricaoOrcamentoForm
+    template_name = 'orcamentos/editar_descricao_orcamento.html'
 
 
 def update_total_orcamento(sender, instance, signal, *args, **kwargs):

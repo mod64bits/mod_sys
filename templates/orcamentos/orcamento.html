@@ -5,7 +5,7 @@
 {% block title %}mod64bits-orçamentos{% endblock title %}
 
 {% block content %}
-    <div class="modal fade" role="dialog" id="modal-default">
+     <div class="modal fade" role="dialog" id="modal-default">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>
         </div>
@@ -16,171 +16,212 @@
             <div class="modal-content"></div>
         </div>
     </div>
-
-    <div class="modal fade"  role="dialog" id="modal">
+     <div class="modal fade"  role="dialog" id="modal">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>
         </div>
     </div>
+
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">Dashboard v2</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard v2</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+     <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">{{ orcamento.cliente }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Orçamento/{{ orcamento.cliente }}</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Info boxes -->
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Total Orçamento</span>
-                                <span class="info-box-number">
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Orçamento</span>
+                            <span class="info-box-number">
                   {{ orcamento.total|default:"0.00" }}
 
                 </span>
-                            </div>
-                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box -->
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.col -->
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
-                            <div class="info-box-content">
-                                <span class="info-box-text">Total Equipamentos</span>
-                                <span class="info-box-number">{{ orcamento.total_equipamentos|default:"0.00" }}</span>
-                            </div>
-                            <!-- /.info-box-content -->
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Equipamentos</span>
+                            <span class="info-box-number">{{ orcamento.total_equipamentos|default:"0.00" }}</span>
                         </div>
-                        <!-- /.info-box -->
+                        <!-- /.info-box-content -->
                     </div>
-                    <!-- /.col -->
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
 
-                    <!-- fix for small devices only -->
-                    <div class="clearfix hidden-md-up"></div>
+                <!-- fix for small devices only -->
+                <div class="clearfix hidden-md-up"></div>
 
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Compra Equipamentos</span>
-                                <span class="info-box-number">{{ orcamento.total_compra|default:"0.00" }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Lucro Equipamentos</span>
-                                <span class="info-box-number">{{ lucro_equipamentos|default:"0.00" }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-                            <div class="info-box-content">
-                                <span class="info-box-text">Mão de Obra</span>
-                                <span class="info-box-number">{{ orcamento.total_mao_de_obra|default:"0.00" }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-6 col-md-3">
-                        <div class="info-box mb-3">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
-                            <div class="info-box-content">
-                                <span class="info-box-text">Total Lucro</span>
-                                <span class="info-box-number">{{ orcamento.total_lucro|default:"0.00" }}</span>
-                            </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-wallet"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Compra Equipamentos</span>
+                            <span class="info-box-number">{{ orcamento.total_compra|default:"0.00" }}</span>
                         </div>
                     </div>
                 </div>
-            </div><!--/. container-fluid -->
-        </section>
-        <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Box Comment -->
-                    <div class="card card-widget">
-                        <div class="card-header">
-                            <div class="user-block">
-                                <div class="row">
-                                    <div class="flex-column">
-                                        <span class="username"><a href="#">{{ orcamento.cliente.nome }}</a></span>
-                                        <span class="description">Documento: {{ orcamento.cliente.documento  }}</span>
-                                    </div>
-                                     <div class="flex-column">
-                                        <span class="username"><a href="#">Documento</a></span>
-                                        <span class="description">{{ orcamento.cliente.telefone  }}</span>
-                                         <span class="description"><a href="#">{{ orcamento.cliente.email }}</a></span>
-                                    </div>
-                                     <div class="flex-column">
-                                        <span class="username"><a href="#">Informações</a></span>
-                                        <span class="description">Validade: {{ orcamento.validade  }}</span>
-                                         <span class="description">Status: {{ orcamento.status|status|safe }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /.user-block -->
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" title="Mark as read">
-                                    <i class="far fa-circle"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <!-- /.card-tools -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Lucro Equipamentos</span>
+                            <span class="info-box-number">{{ lucro_equipamentos|default:"0.00" }}</span>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="attachment-block clearfix">
-
-
-                                <div class="attachment-pushed">
-                                    <div class="attachment-text">
-                                       {{ orcamento.descricao|safe }}
-                                    </div>
-                                    <!-- /.attachment-text -->
-                                </div>
-                                <!-- /.attachment-pushed -->
-                            </div>
-                        </div>
-                       
                     </div>
-                    <!-- /.card -->
+                </div>
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Mão de Obra</span>
+                            <span class="info-box-number">{{ orcamento.total_mao_de_obra|default:"0.00" }}</span>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
+                        <div class="info-box-content">
+                            <span class="info-box-text">Total Lucro</span>
+                            <span class="info-box-number">{{ orcamento.total_lucro|default:"0.00" }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-        <section class="content">
+        </div><!--/. container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="row">
+        <div class="col-md-12">
+            <!-- Box Comment -->
+            <div class="card card-widget">
+                <div class="card-header">
+                    <div class="user-block">
+                        <div class="row">
+                            <div class="flex-column">
+                                <span class="username"><a href="#">{{ orcamento.cliente.nome }}</a></span>
+                                <span class="description">Documento: {{ orcamento.cliente.documento  }}</span>
+                            </div>
+                            <div class="flex-column">
+                                <span class="username"><a href="#">Documento</a></span>
+                                <span class="description">{{ orcamento.cliente.telefone  }}</span>
+                                <span class="description"><a href="#">{{ orcamento.cliente.email }}</a></span>
+                            </div>
+                            <div class="flex-column">
+                                <span class="username"><a href="#">Informações</a></span>
+                                <span class="description">Validade: {{ orcamento.validade  }}</span>
+                                <span class="description">Status: {{ orcamento.status|status|safe }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.user-block -->
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" title="Mark as read">
+                            <i class="far fa-circle"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Descrição</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <!-- we are adding the accordion ID so Bootstrap's collapse plugin detects it -->
+                                    <div id="accordion">
+                                        <div class="card card-primary">
+                                            <div class="card-header">
+
+                                                <h4 class="card-title w-100">
+                                                    <a class="d-block w-100" data-toggle="collapse" href="#informacoes">
+                                                        Informações Orçamento
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                            <div id="informacoes" class="collapse" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <div class="card-footer clearfix">
+                                                        <a href="{% url 'orcamentos:editar_descricao_orcamento' orcamento.id %}"  class="btn btn-primary float-right"><i class="fas fa-plus"></i> Editar Descrição</a>
+                                                    </div>
+                                                    <div class="attachment-block clearfix">
+
+
+                                                        <div class="attachment-pushed">
+                                                            <div class="attachment-text">
+                                                                {{ orcamento.descricao|safe }}
+                                                            </div>
+                                                            <!-- /.attachment-text -->
+                                                        </div>
+                                                        <!-- /.attachment-pushed -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+
+                        <!-- /.col -->
+                    </div>
+
+
+                </div>
+                <!-- /.card -->
+            </div>
+
+
+        </div>
+
+
+    </div>
+    </section>
+    <section class="content">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -352,9 +393,9 @@
                 </div>
             </div>
         </section>
-    </div>
 
-{% endblock content %}
+    </div>
+{% endblock %}
 
 {% block scripts %}
     <script type="text/javascript">

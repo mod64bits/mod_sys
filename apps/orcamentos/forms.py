@@ -42,3 +42,11 @@ class GerarOrcamentoForm(forms.ModelForm):
     class Meta:
         model = Orcamento
         fields = ['cliente', 'descricao']
+
+
+class EditarDescricaoOrcamentoForm(forms.ModelForm):
+    descricao = forms.CharField(widget=CKEditorWidget())
+
+    class Meta:
+        model = Orcamento
+        fields = ['descricao']
