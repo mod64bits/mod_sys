@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'apps.servicos',
     'apps.clientes',
     'apps.dashboard',
+    'apps.relatorios',
 
 ]
 
@@ -83,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mod_sys',
         'USER': 'postgres',
-        'PASSWORD': 'mod64!',
+        'PASSWORD': 'mod64',
         'HOST': '172.16.1.100',
         'PORT': '5432',
     }
