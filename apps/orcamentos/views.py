@@ -52,6 +52,7 @@ class OrcamentoView(LoginRequiredMixin, TemplateView):
         context['qt_produtos'] = self.quantidade_itens
         context['lucro_equipamentos'] = self.total_lucro_equipamentos(context['orcamento'].total_equipamentos,
                                                                       context['orcamento'].total_compra)
+        context['menu_open_orcamento'] = True
         return context
 
     def total_lucro_equipamentos(self, total_equipamentos, total_compra):
