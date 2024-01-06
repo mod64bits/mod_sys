@@ -8,10 +8,12 @@ from apps.ticket import urls as tickets_url
 from apps.produtos import urls as produtos_url
 from apps.servicos import urls as servicos_url
 from apps.orcamentos import urls as orcamentos_url
+from apps.relatorios import urls as relatorios_urls
 
 urlpatterns = [
 
     path('', include(dashboard_urls)),
+    path('relatorios/', include(relatorios_urls)),
     path('orcamentos/', include(orcamentos_url)),
     path('produtos/', include(produtos_url)),
     path('servicos/', include(servicos_url)),

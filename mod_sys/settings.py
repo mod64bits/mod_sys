@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
+    'wkhtmltopdf',
     # apps
     'apps.base',
     'apps.core',
@@ -89,7 +90,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+WEASYPRINT_BASEURL = '/'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
