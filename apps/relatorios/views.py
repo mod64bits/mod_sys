@@ -1,9 +1,10 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from apps.orcamentos.models import Orcamento
 
 
-class OrcamentoSimples(TemplateView):
+class OrcamentoSimples(LoginRequiredMixin, TemplateView):
     template_name = 'relatorios/orcamento_simples_template.html'
 
     def get(self, request, *args, **kwargs):
