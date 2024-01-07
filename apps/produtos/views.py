@@ -127,7 +127,7 @@ class ListaProdutosView(LoginRequiredMixin, ListView):
         return context
 
 
-class NovoProdutoView(CreateView):
+class NovoProdutoView(LoginRequiredMixin, CreateView):
     model = Produto
     fields = '__all__'
     template_name = 'produtos/novo_produto.html'
@@ -139,7 +139,7 @@ class NovoProdutoView(CreateView):
         return context
 
 
-class EditarProdutoView(UpdateView):
+class EditarProdutoView(LoginRequiredMixin, UpdateView):
     model = Produto
     fields = '__all__'
     template_name = 'produtos/novo_produto.html'

@@ -41,17 +41,13 @@ class NovoOrcamentoView(LoginRequiredMixin, BSModalCreateView):
 class OrcamentoView(LoginRequiredMixin, TemplateView):
     template_name = 'orcamentos/orcamento.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     orcamento = Orcamento.objects.get(id=kwargs['pk'])
-    #
-    #     return super(OrcamentoView, self).get(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['orcamento'] = Orcamento.objects.get(id=kwargs['pk'])
         context['qt_produtos'] = self.quantidade_itens
         context['lucro_equipamentos'] = self.total_lucro_equipamentos(context['orcamento'].total_equipamentos,
                                                                       context['orcamento'].total_compra)
+        context['menu_open_orcamento'] = True
         return context
 
     def total_lucro_equipamentos(self, total_equipamentos, total_compra):

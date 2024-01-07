@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
-
+from pathlib import Path
+from decouple import config
+from dj_database_url import parse as dburl
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ckeditor',
     'ckeditor_uploader',
+    'wkhtmltopdf',
     # apps
     'apps.base',
     'apps.core',
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'apps.servicos',
     'apps.clientes',
     'apps.dashboard',
+    'apps.relatorios',
 
 ]
 
@@ -78,17 +82,16 @@ WSGI_APPLICATION = 'mod_sys.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mod_sys',
-        'USER': 'postgres',
-        'PASSWORD': 'mod64!',
-        'HOST': '172.16.1.100',
-        'PORT': '5432',
-    }
-}
+PRODUCAO = config('PRODUCAO', cast=bool)
 
+if PRODUCAO:
+    default_dburl = config('DATABASE_URL')
+else:
+    default_dburl = config('DATABASE_URL_DEV')
+DATABASES = {
+    'default': config(default_dburl, default=default_dburl, cast=dburl),
+}
+WEASYPRINT_BASEURL = '/'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
