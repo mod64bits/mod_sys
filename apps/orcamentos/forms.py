@@ -9,6 +9,11 @@ class NovoOrcamentoForm(BSModalModelForm):
     class Meta:
         model = Orcamento
         fields = ['cliente']
+        
+class MudarStatusForm(BSModalModelForm):
+    class Meta:
+        model = Orcamento
+        fields = ['status']
 
 
 class InformacoesForm(forms.ModelForm):

@@ -73,7 +73,13 @@
                                             <td>{{ orcamento.total }}</td>
                                             <td>{{ orcamento.total_compra }}</td>
                                             <td>{{ orcamento.total_lucro }}</td>
-                                            <td>Ação</td>
+                                            <td>
+                                                <button type="button" class="update-status btn btn-info btn-sm" data-form-url="{% url 'orcamentos:mudar_status' orcamento.id %}">
+                                                                    <i class="fas fa-pencil-alt">
+                                                                    </i>
+                                                                    Editar
+                                                                </button>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
@@ -140,6 +146,18 @@
             }
 
             updateClienteModalForm();
+
+            function updateStatusModalForm() {
+                $(".update-status").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateStatusModalForm()                                                                                                                                                                                                                                                                                                      
 
         function deleteClienteForm() {
         $(".delete-cliente").each(function () {

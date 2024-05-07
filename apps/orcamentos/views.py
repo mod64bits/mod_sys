@@ -9,7 +9,7 @@ from django.views.generic.edit import UpdateView
 from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalReadView, BSModalDeleteView
 from .models import Orcamento, ItemProduto, ItemMaoDeObra
 from .forms import (NovoOrcamentoForm, OrcamentoItemProdutoForm, OrcamentoItemServico, GerarOrcamentoForm,
-                    EditarDescricaoOrcamentoForm)
+                    EditarDescricaoOrcamentoForm, MudarStatusForm)
 from django.views.generic.edit import CreateView
 
 
@@ -23,6 +23,11 @@ class ListaOrcamentoView(LoginRequiredMixin, ListView):
         context['active_orcamentos'] = True
         return context
 
+class MudarStausOrcamentoView(BSModalUpdateView):
+    model = Orcamento
+    template_name = 'orcamentos/mudar_status.html'
+    form_class = MudarStatusForm
+    success_url = '/orcamentos'
 
 class NovoOrcamentoView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'orcamentos/novo_orcamento.html'

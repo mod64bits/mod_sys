@@ -1,0 +1,55 @@
+{% load widget_tweaks %}
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.media}}
+
+    <div class="modal-header">
+        <h5 class="modal-title">Mudar Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    <label for="{{ form.status.id }}">{{ form.status.label }}</label>
+                    {% render_field form.status class="form-control select2bs4" type="text"  role="textbox" style="width: 100%;"%}
+                </div>
+            </div>
+           
+             
+        </div>
+    
+
+    </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+
+</form>
+
+<script>
+    $(function () {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        })
+    })
+
+
+
+</script>
