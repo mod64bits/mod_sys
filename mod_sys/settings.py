@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from pathlib import Path
+
 # from decouple import config
 # from dj_database_url import parse as dburl
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'wkhtmltopdf',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     # apps
     'apps.base',
     'apps.core',
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_plotly_dash.middleware.BaseMiddleware',
 ]
 
 ROOT_URLCONF = 'mod_sys.urls'
@@ -222,3 +224,5 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'

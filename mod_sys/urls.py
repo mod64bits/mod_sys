@@ -13,6 +13,7 @@ from apps.relatorios import urls as relatorios_urls
 urlpatterns = [
 
     path('', include(dashboard_urls)),
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('relatorios/', include(relatorios_urls)),
     path('orcamentos/', include(orcamentos_url)),
     path('produtos/', include(produtos_url)),
