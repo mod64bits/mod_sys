@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'apps.clientes',
     'apps.dashboard',
     'apps.relatorios',
+    'apps.ordemdeservicos',
 
 ]
 
