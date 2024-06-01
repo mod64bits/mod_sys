@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'wkhtmltopdf',
+    'django_filters',
+    'formset',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     # apps
     'apps.base',
