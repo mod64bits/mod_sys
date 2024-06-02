@@ -1,0 +1,113 @@
+{% extends "base/base.html" %}
+{% load widget_tweaks %}
+{% load formsetify %}
+{% render_form form "bootstrap" %}
+
+<!-- Content Wrapper. Contains page content -->
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Starter Page</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Starter Page</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="container">
+            <div class="container-fluid">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Ordem de Serviço</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label>{{ form.solicitante.label }}</label>
+                                    {% render_field form.solicitante class="form-control" %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+                                    {% for error in form.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                
+                                </div>
+                                <div class="col-sm-4">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>{{ form.responsavel.label }}</label>
+                                        {% render_field form.responsavel class="form-control select2bs4" %}
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>{{ form.cliente.label }}</label>
+                                        {% render_field form.cliente class="form-control select2bs4" %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>{{ form.emissao.label }}</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            {% render_field form.emissao class="form-control" %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>{{ form.descricao.label }}</label>
+                                        {% render_field form.descricao class="form-control" %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.select2').select2()
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+        })
+
+
+
+    </script>
+{% endblock scripts %}
+  

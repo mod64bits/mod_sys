@@ -12,12 +12,6 @@ class OrdemServicoForm(ModelForm):
         self.fields['emissao'] = fields.DateTimeField(
             widget=DateTimeInput(),
         )
-        self.fields['inicio_execucao'] = fields.DateTimeField(
-            widget=DateTimeInput(),
-        )
-        self.fields['fim_execucao'] = fields.DateTimeField(
-            widget=DateTimeInput(),
-        )
 
     class Meta:
         model = OrdemDeServico

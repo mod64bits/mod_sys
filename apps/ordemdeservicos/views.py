@@ -33,6 +33,8 @@ class OrdensLista(BaseListFilter):
 class NovaOrdem(CreateView):
     template_name = 'ordens/ordemdeservico_form.html'
     form_class = OrdemServicoForm
+    success_url = '/ordens'
+
 
 
 class OrdemDetalhes(DetailView):

@@ -28,7 +28,7 @@ class OrdemDeServico(BaseModel):
         verbose_name="Cliente",
         related_name="os_cliente"
     )
-    emissao = models.DateTimeField("Emissao")
+    emissao = models.DateTimeField("Emissao", null=True, blank=True)
     inicio_execucao = models.DateTimeField("Inicio", null=True, blank=True)
     descricao = models.TextField("Descrição da OS")
     resolucao = models.TextField("Resolução", null=True, blank=True)
