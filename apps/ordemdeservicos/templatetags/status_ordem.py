@@ -6,7 +6,6 @@ register = template.Library()
 
 @register.filter
 def ordem_status(value):
-    status = ""
     if value == 0:
         status = "<span class='badge bg-danger'>Não Execultado</span>"
         return status

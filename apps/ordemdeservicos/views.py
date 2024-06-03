@@ -37,6 +37,6 @@ class NovaOrdem(CreateView):
 
 
 
-class OrdemDetalhes(DetailView):
+class OrdemDeServico(DetailView):
     model = OrdemDeServico
 
