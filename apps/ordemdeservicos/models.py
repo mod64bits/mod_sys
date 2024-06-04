@@ -8,6 +8,12 @@ from apps.produtos.models import Produto
 
 
 class OrdemDeServico(BaseModel):
+    PRIORIDADE_CHOICES = (
+        ("BAIXA", "BAIXA"),
+        ("MEDIA", "MEDIA"),
+        ("ALTA", "ALTA"),
+        ("URGENTE", "URGENTE"),
+    )
     STATUS_CHOICES = (
         (0, "Não Execultado"),
         (1, "Em Execução"),
@@ -22,6 +28,7 @@ class OrdemDeServico(BaseModel):
         related_name="os_user"
     )
     status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0)
+    prioridade = models.CharField("Prioridade", choices=PRIORIDADE_CHOICES, default= "BAIXA", max_length=15, null=True, blank=True)
     cliente = models.ForeignKey(
         Cliente,
         on_delete=models.CASCADE,

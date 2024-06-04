@@ -15,5 +15,5 @@ class OrdemServicoForm(ModelForm):
 
     class Meta:
         model = OrdemDeServico
-        fields = ['solicitante', 'responsavel', 'emissao', 'cliente', 'descricao']
+        fields = ['prioridade', 'solicitante', 'responsavel', 'emissao', 'cliente', 'descricao']
 
