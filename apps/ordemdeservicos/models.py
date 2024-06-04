@@ -29,6 +29,7 @@ class OrdemDeServico(BaseModel):
     )
     status = models.IntegerField('Situação', choices=STATUS_CHOICES, default=0)
     prioridade = models.CharField("Prioridade", choices=PRIORIDADE_CHOICES, default= "BAIXA", max_length=15, null=True, blank=True)
+    codigo = models.CharField("Código", max_length=100, null=True, blank=True, editable=False)
     cliente = models.ForeignKey(
         Cliente,
         on_delete=models.CASCADE,

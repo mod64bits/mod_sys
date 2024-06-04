@@ -1,7 +1,7 @@
 import formset
 from django.forms import fields, forms
 from django.forms import ModelForm
-
+from apps.core.ultils import gerador_de_codigo
 from formset.widgets import DatePicker, DateTimePicker, DateTimeInput
 from .models import OrdemDeServico
 
@@ -16,4 +16,12 @@ class OrdemServicoForm(ModelForm):
     class Meta:
         model = OrdemDeServico
         fields = ['prioridade', 'solicitante', 'responsavel', 'emissao', 'cliente', 'descricao']
+
+    def save(self, commit=True):
+        instance = super(OrdemServicoForm, self).save(commit=False)
+        if not instance.codigo:
+            instance.codigo = gerador_de_codigo(instance.cliente.nome)
+        if commit:
+            instance.save()
+        return instance
 

@@ -56,8 +56,9 @@ class Datas:
 
 
 def gerador_de_codigo(cliente):
-    cli = cliente.split()
-    cliente = [i[0].upper() for i in cli]
-    codigo = f"{cliente}" + str(datetime.datetime.now())
+    _cli = cliente.split()
+    cli = [i[0].upper() for i in _cli]
+    _codigo = ''.join([i[0].upper() for i in cli])
+    codigo = _codigo + str(datetime.datetime.now())
 
     return codigo
