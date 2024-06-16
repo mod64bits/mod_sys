@@ -13,9 +13,9 @@ def ordem_status(value):
         status = "<span class='badge bg-info '>Em Execução</span>"
         return status
     if value == 2:
-        status = "<span class='badge bg-success '>Em Finalizado</span>"
+        status = "<span class='badge bg-success '>Finalizado</span>"
         return status
-    if value == 2:
+    if value == 3:
         status = "<span class='badge bg-warning'>Aguardando Equipamento(s)</span>"
         return status
 

@@ -3,6 +3,17 @@
 
   <!-- Content Wrapper. Contains page content -->
     {% block content %}
+        <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+<div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
         <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -132,15 +143,15 @@
                               </i>
                               View
                           </a>
-                          <a class="btn btn-info btn-sm" href="#">
+                          <button type="button" class="update-status btn btn-info btn-sm"  data-form-url="{% url 'ordens:mudar_os_status' item.id %}">
                               <i class="fas fa-pencil-alt">
                               </i>
-                              Edit
-                          </a>
-                          <a class="btn btn-danger btn-sm" href="{% url 'ordens:export-pdf' item.id %}">
-                              <i class="fas fa-trash">
+                              Status
+                          </button>
+                          <a class="btn btn-dark btn-sm" href="{% url 'ordens:export-pdf' item.id %}">
+                              <i class="fas fa-print">
                               </i>
-                              Delete
+                              Print
                           </a>
                       </td>
                     </tr>
