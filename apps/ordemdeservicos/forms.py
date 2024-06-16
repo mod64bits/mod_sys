@@ -4,7 +4,7 @@ from django.forms import ModelForm
 from apps.core.ultils import gerador_de_codigo
 from formset.widgets import DatePicker, DateTimePicker, DateTimeInput
 from .models import OrdemDeServico
-
+from bootstrap_modal_forms.forms import BSModalModelForm
 
 class OrdemServicoForm(ModelForm):
     def __init__(self, *args, **kwargs):
@@ -25,3 +25,7 @@ class OrdemServicoForm(ModelForm):
             instance.save()
         return instance
 
+class MudarStatusForm(BSModalModelForm):
+    class Meta:
+        model = OrdemDeServico
+        fields = ['status']

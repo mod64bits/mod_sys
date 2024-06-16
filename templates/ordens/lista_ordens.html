@@ -179,3 +179,21 @@
   </div>
     {% endblock content %}
   <!-- /.content-wrapper -->
+
+
+{% block scripts %}
+      <script type="text/javascript">
+        $(document).ready(function() {
+            function updateStausModalForm() {
+                $(".update-status").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+            updateStausModalForm();
+        });
+    </script>
+{% endblock scripts %}

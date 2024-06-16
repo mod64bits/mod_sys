@@ -7,11 +7,12 @@ from django.views.generic.list import ListView
 from .filters import OrdemStatusFilter
 from .models import OrdemDeServico
 from django.views.generic.edit import CreateView
-from  .forms import OrdemServicoForm
+from  .forms import OrdemServicoForm, MudarStatusForm
 from django.views.generic.detail import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from bootstrap_modal_forms.generic import BSModalUpdateView
 
-
-class BaseListFilter(ListView):
+class BaseListFilter(LoginRequiredMixin, ListView):
     filterset_class = None
     template_name = 'ordens/lista_ordens.html'
     model = OrdemDeServico
@@ -32,14 +33,19 @@ class OrdensLista(BaseListFilter):
     filterset_class = OrdemStatusFilter
 
 
-class NovaOrdem(CreateView):
+class NovaOrdem(LoginRequiredMixin, CreateView):
     template_name = 'ordens/ordemdeservico_form.html'
     form_class = OrdemServicoForm
     success_url = '/ordens'
 
 
+class MudarStatusOrdem(BSModalUpdateView):
+    model = OrdemDeServico
+    form_class = MudarStatusForm
+    template_name = 'ordens/mudar_status.html'
+    success_url = '/ordens'
 
-class OrdemDeServicoDetalhe(DetailView):
+class OrdemDeServicoDetalhe(LoginRequiredMixin, DetailView):
     model = OrdemDeServico
 
 def export_ordem_pdf(request, id):

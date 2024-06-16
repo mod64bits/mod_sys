@@ -7,10 +7,16 @@ register = template.Library()
 @register.filter
 def ordem_status(value):
     if value == 0:
-        status = "<span class='badge bg-danger'>Não Execultado</span>"
+        status = "<span class='badge bg-danger '>Não Execultado</span>"
         return status
     if value == 1:
-        status = "<span class='badge bg-warning'>Em Execução</span>"
+        status = "<span class='badge bg-info '>Em Execução</span>"
+        return status
+    if value == 2:
+        status = "<span class='badge bg-success '>Em Finalizado</span>"
+        return status
+    if value == 2:
+        status = "<span class='badge bg-warning'>Aguardando Equipamento(s)</span>"
         return status
 
 
