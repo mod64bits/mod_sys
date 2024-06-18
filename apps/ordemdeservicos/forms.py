@@ -1,15 +1,14 @@
-import formset
-from django.forms import fields, forms
-from django.forms import ModelForm
+from ckeditor.widgets import CKEditorWidget
+from django import forms
 from apps.core.ultils import gerador_de_codigo
 from formset.widgets import DatePicker, DateTimePicker, DateTimeInput
 from .models import OrdemDeServico
 from bootstrap_modal_forms.forms import BSModalModelForm
 
-class OrdemServicoForm(ModelForm):
+class OrdemServicoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OrdemServicoForm, self).__init__(*args, **kwargs)
-        self.fields['emissao'] = fields.DateTimeField(
+        self.fields['emissao'] = forms.fields.DateTimeField(
             widget=DateTimeInput(),
         )
 
@@ -29,3 +28,18 @@ class MudarStatusForm(BSModalModelForm):
     class Meta:
         model = OrdemDeServico
         fields = ['status']
+
+class EditarOrdemServicoForm(BSModalModelForm):
+    resolucao = forms.CharField(widget=CKEditorWidget())
+    def __init__(self, *args, **kwargs):
+        super(EditarOrdemServicoForm, self).__init__(*args, **kwargs)
+        self.fields['inicio_execucao'] = forms.fields.DateTimeField(
+            widget=DateTimeInput(),
+        )
+        self.fields['fim_execucao'] = forms.fields.DateTimeField(
+            widget=DateTimeInput(),
+        )
+    class Meta:
+        model = OrdemDeServico
+        fields = ['prioridade', 'responsavel', 'status', 'inicio_execucao', 'resolucao', 'fim_execucao', 'total_equipamentos', 'total']
+

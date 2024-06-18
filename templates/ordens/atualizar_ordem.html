@@ -1,0 +1,90 @@
+
+{% load static %}
+{% load widget_tweaks %}
+
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.media}}
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">{{ object.cliente }} COD.: {{ object.codigo }}</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+
+                        <label for="{{ form.responsavel.id }}">{{ form.responsavel.label }}</label>
+                        {% render_field form.responsavel class="form-control select2bs4" type="text"  role="textbox" style="width: 100%;"%}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+
+                        <label for="{{ form.total_equipamentos.id }}">{{ form.total_equipamentos.label }}</label>
+                        {% render_field form.total_equipamentos class="form-control"%}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="{{ form.total.id }}">{{ form.total.label }}</label>
+                        {% render_field form.total class="form-control"%}
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+
+                        <label for="{{ form.prioridade.id }}">{{ form.prioridade.label }}</label>
+                        {% render_field form.prioridade class="form-control select2bs4" type="text"  role="textbox" style="width: 100%;"%}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" >
+
+                        <label for="{{ form.status.id }}">{{ form.status.label }}</label>
+                        {% render_field form.status class="form-control select2bs4" type="text"  role="textbox" style="width: 100%;"%}
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" {% if form.inicio_execucao.errors %} has-error {% endif %}>
+                        <label for="{{ form.inicio_execucao.id }}">{{ form.inicio_execucao.label }}</label>
+                        {% render_field form.inicio_execucao class="form-control"%}
+                        <div class="help-block">{{ form.inicio_execucao.errors }}</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="{{ form.fim_execucao.id }}">{{ form.fim_execucao.label }}</label>
+                        {% render_field form.fim_execucao class="form-control"%}
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+
+                        <label for="{{ form.resolucao.id }}">{{ form.descricao.label }}</label>
+                        {% render_field form.resolucao class="form-control"%}
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+
+</form>

@@ -3,6 +3,7 @@
 
   <!-- Content Wrapper. Contains page content -->
     {% block content %}
+        {% include 'ordens/modal_xl.html' %}
         <div class="modal fade" role="dialog" id="modal-default">
         <div class="modal-dialog" role="document">
             <div class="modal-content"></div>
@@ -138,11 +139,11 @@
                       <td>{{ item.emissao }}</td>
                       <td>{{ item.status|ordem_status|safe }}</td>
                       <td class="project-actions text-right">
-                          <a class="btn btn-primary btn-sm" href="#">
+                          <button type="button" class="update-ordem btn btn-primary btn-sm" data-form-url="{% url 'ordens:atualizar_ordem' item.id %}">
                               <i class="fas fa-folder">
                               </i>
                               View
-                          </a>
+                          </button>
                           <button type="button" class="update-status btn btn-info btn-sm"  data-form-url="{% url 'ordens:mudar_os_status' item.id %}">
                               <i class="fas fa-pencil-alt">
                               </i>
@@ -205,6 +206,20 @@
                 });
             }
             updateStausModalForm();
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            function updateOrdemModalForm() {
+                $(".update-ordem").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-xl",
+                    });
+                });
+            }
+            updateOrdemModalForm();
         });
     </script>
 {% endblock scripts %}

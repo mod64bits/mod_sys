@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.views.generic.list import ListView
 from .filters import OrdemStatusFilter
 from .models import OrdemDeServico
-from django.views.generic.edit import CreateView
-from  .forms import OrdemServicoForm, MudarStatusForm
+from django.views.generic.edit import CreateView, UpdateView
+from  .forms import OrdemServicoForm, MudarStatusForm, EditarOrdemServicoForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from bootstrap_modal_forms.generic import BSModalUpdateView
@@ -39,7 +39,7 @@ class NovaOrdem(LoginRequiredMixin, CreateView):
     success_url = '/ordens'
 
 
-class MudarStatusOrdem(BSModalUpdateView):
+class MudarStatusOrdem(LoginRequiredMixin, BSModalUpdateView):
     model = OrdemDeServico
     form_class = MudarStatusForm
     template_name = 'ordens/mudar_status.html'
@@ -47,6 +47,12 @@ class MudarStatusOrdem(BSModalUpdateView):
 
 class OrdemDeServicoDetalhe(LoginRequiredMixin, DetailView):
     model = OrdemDeServico
+
+class EditarOrdemServicoView(LoginRequiredMixin, BSModalUpdateView):
+    model = OrdemDeServico
+    form_class = EditarOrdemServicoForm
+    template_name = 'ordens/atualizar_ordem.html'
+    success_url = '/ordens'
 
 def export_ordem_pdf(request, id):
     ordem = OrdemDeServico.objects.get(id=id)

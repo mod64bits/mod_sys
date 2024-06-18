@@ -57,6 +57,8 @@ class OrdemDeServico(BaseModel):
         return self.descricao
 
 
+
+
 class ItemOS(BaseModel):
     ordem_servico = models.ForeignKey(
         OrdemDeServico,
