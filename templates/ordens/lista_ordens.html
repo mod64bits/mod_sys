@@ -134,7 +134,7 @@
                   <tbody>
                   {% for item in object_list %}
                     <tr>
-                      <td>{{ item.cliente.nome }}</td>
+                        <td><a href="{% url 'ordens:Update_ordem' item.id %}"> {{ item.cliente.nome }}</a></td>
                       <td>{{ item.solicitante }}</td>
                       <td>{{ item.emissao }}</td>
                       <td>{{ item.status|ordem_status|safe }}</td>

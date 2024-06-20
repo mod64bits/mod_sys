@@ -19,4 +19,19 @@ def ordem_status(value):
         status = "<span class='badge bg-warning'>Aguardando Equipamento(s)</span>"
         return status
 
+@register.filter
+def ordem_prioridade(value):
+    if value =="BAIXA":
+        status = "<span class='badge bg-success'>BAIXA</span>"
+        return status
+    if value =="MEDIA":
+        status = "<span class='badge bg-info'>MEDIA</span>"
+        return status
+    if value == "ALTA":
+        status = "<span class='badge  bg-danger'>ALTA</span>"
+        return status
+    if value == "URGENTE":
+        status = "<span class='badge bg-warning'>URGENTE(s)</span>"
+        return status
+
 

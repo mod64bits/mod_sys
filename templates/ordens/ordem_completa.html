@@ -1,0 +1,108 @@
+{% extends 'base/base.html' %}
+{%  load status_ordem %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Inline Charts</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Inline Charts</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-bullhorn"></i>
+                                    Callouts
+                                </h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>{{ object.cliente }}</h5>
+                                            <p>{{ object.cliente.documento }}</p>
+                                            <p>{{ object.cliente.telefone }}</p>
+                                            <p>{{ object.cliente.email }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>Abertura: {{ object.created }}</h5>
+                                            <p>Fechamento: {{ bject.fim_execucao|default:"Ordem Aberta" }}</p>
+                                            <p>Prioridade: {{ object.prioridade|ordem_prioridade|safe }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>{{ object.codigo|default:"Sem Código cadastrado " }}</h5>
+                                            <p>Inicio: {{ object.inicio_execucao }}</p>
+                                            <p>Tempo Tempo Serviço: {{ object.tempo_servico }}</p>
+                                            <p>Tempo Total: {{ object.tempo_total }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>Valor Total: {{ object.total|default:"0,00" }}</h5>
+                                            <p>Valor Equipamentos: {{ object.total_equipamentos|default:"0,00" }}</p>
+                                            <p>Fim: {{ object.fim_execucao }}</p>
+                                            <p>Tempo Tempo Serviço: {{ object.tempo_servico }}</p>
+                                            <p>Tempo Total: {{ object.tempo_total }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Application buttons -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Ações</h3>
+                            </div>
+                            <div class="card-body">
+                                <a class="btn btn-app bg-secondary">
+
+                                    <i class="fas fa-barcode"></i> PDF
+                                </a>
+                                <a class="btn btn-app bg-success">
+                                    <i class="fas fa-users"></i> Whatsapp
+                                </a>
+                                <a class="btn btn-app bg-danger">
+
+                                    <i class="fas fa-inbox"></i> Email
+                                </a>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}
