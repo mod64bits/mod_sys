@@ -5,7 +5,7 @@ from apps.users.models import User
 from apps.base.models import BaseModel
 from apps.clientes.models import Cliente
 from apps.produtos.models import Produto
-
+from django.urls import reverse
 
 class OrdemDeServico(BaseModel):
     PRIORIDADE_CHOICES = (
@@ -86,3 +86,6 @@ class ItemOS(BaseModel):
 
     def __str__(self) -> str:
         return f"{self.ordem_servico.descricao}-{self.produto.nome}"
+
+    def get_absolute_url(self):
+        return reverse('ord:orcamento', kwargs={'pk': self.id})

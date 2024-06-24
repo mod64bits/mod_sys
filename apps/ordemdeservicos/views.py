@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 from .filters import OrdemStatusFilter
 from .models import OrdemDeServico
 from django.views.generic.edit import CreateView, UpdateView
-from  .forms import OrdemServicoForm, MudarStatusForm, EditarOrdemServicoForm
+from  .forms import OrdemServicoForm, MudarStatusForm, EditarOrdemServicoForm, EditarOrdemCompletaForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from bootstrap_modal_forms.generic import BSModalUpdateView
@@ -58,7 +58,7 @@ class EditarOrdemServicoView(LoginRequiredMixin, BSModalUpdateView):
 
 class OrdemDeServicoCompletaView(LoginRequiredMixin, UpdateView):
     model = OrdemDeServico
-    fields = '__all__'
+    form_class = EditarOrdemCompletaForm
     template_name = 'ordens/ordem_completa.html'
 
 def export_ordem_pdf(request, id):

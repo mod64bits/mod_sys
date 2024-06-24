@@ -43,3 +43,21 @@ class EditarOrdemServicoForm(BSModalModelForm):
         model = OrdemDeServico
         fields = ['prioridade', 'responsavel', 'status', 'inicio_execucao', 'resolucao', 'fim_execucao', 'total_equipamentos', 'total']
 
+
+class EditarOrdemCompletaForm(forms.ModelForm):
+    descricao = forms.CharField(widget=CKEditorWidget())
+    resolucao = forms.CharField(widget=CKEditorWidget())
+
+    def __init__(self, *args, **kwargs):
+        super(EditarOrdemCompletaForm, self).__init__(*args, **kwargs)
+        self.fields['inicio_execucao'] = forms.fields.DateTimeField(
+            widget=DateTimeInput(),
+        )
+        self.fields['fim_execucao'] = forms.fields.DateTimeField(
+            widget=DateTimeInput(),
+        )
+
+    class Meta:
+        model = OrdemDeServico
+        fields = '__all__'
+
