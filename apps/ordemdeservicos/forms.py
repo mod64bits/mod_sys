@@ -2,7 +2,7 @@ from ckeditor.widgets import CKEditorWidget
 from django import forms
 from apps.core.ultils import gerador_de_codigo
 from formset.widgets import DatePicker, DateTimePicker, DateTimeInput
-from .models import OrdemDeServico
+from .models import OrdemDeServico, ItemOS
 from bootstrap_modal_forms.forms import BSModalModelForm
 
 class OrdemServicoForm(forms.ModelForm):
@@ -61,3 +61,18 @@ class EditarOrdemCompletaForm(forms.ModelForm):
         model = OrdemDeServico
         fields = '__all__'
 
+class AdcionarItemForm(BSModalModelForm):
+    class Meta:
+        model = ItemOS
+        fields = '__all__'
+
+
+
+
+
+    def save(self, commit=True):
+        instance = super(AdcionarItemForm, self).save(commit=False)
+        instance.total = instance.preco * instance.quantidade
+        if commit:
+            instance.save()
+        return instance

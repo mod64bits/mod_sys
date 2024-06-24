@@ -66,16 +66,9 @@ class ItemOS(BaseModel):
         verbose_name='OS',
         related_name='produto_OS'
     )
-    produto = models.ForeignKey(
-        Produto,
-        on_delete=models.CASCADE,
-        verbose_name='Produto',
-        related_name='os_produto',
-    )
+    item = models.CharField('Item', max_length=150, null=True, blank=True)
     quantidade = models.PositiveIntegerField('Quantidade', default=1)
-    porcentagem = models.DecimalField('Porcentagem', max_digits=16, null=True, blank=True, decimal_places=2,
-                                      validators=[
-                                          MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+
     preco = models.DecimalField("Preço de Compra", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
         MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     total = models.DecimalField("Total", max_digits=16, null=True, blank=True, decimal_places=2, validators=[
@@ -85,7 +78,38 @@ class ItemOS(BaseModel):
     modified = models.DateTimeField('Modificado em', auto_now=True)
 
     def __str__(self) -> str:
-        return f"{self.ordem_servico.descricao}-{self.produto.nome}"
+        return f"{self.ordem_servico.descricao}-{self.item}"
 
-    def get_absolute_url(self):
-        return reverse('ord:orcamento', kwargs={'pk': self.id})
+
+
+def update_total_item_ordem(sender, instance, signal, *args, **kwargs):
+    ordem = instance.ordem_servico
+    total_item = 0
+    preco = 0
+
+
+    obj = ItemOS.objects.filter(ordem_servico=ordem)
+
+    for item in obj:
+        if not item.total:
+            continue
+        total_item += item.total
+    for product in obj:
+        total_item = ordem.preco * product.quantidade
+
+
+    _obj_produto_compra = ItemProduto.objects.filter(orcamento=orcamento)
+    _obj_compra_mao_de_obra = ItemMaoDeObra.objects.filter(orcamento=orcamento)
+    tota_item_compra = 0
+    for item_comp in _obj_produto_compra:
+        tota_item_compra += item_comp.produto.preco_compra * item_comp.quantidade
+
+    orcamento.total_equipamentos = total_produtos
+    orcamento.total_mao_de_obra = total_mao_de_obra
+    orcamento.total = total_produtos + total_mao_de_obra
+
+    orcamento.total_compra = total_compra
+
+    orcamento.total_lucro = ((total_produtos + total_mao_de_obra) - tota_item_compra)
+
+    orcamento.save()

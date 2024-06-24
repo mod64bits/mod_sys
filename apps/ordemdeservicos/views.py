@@ -5,13 +5,13 @@ import datetime
 from django.http import HttpResponse
 from django.views.generic.list import ListView
 from .filters import OrdemStatusFilter
-from .models import OrdemDeServico
+from .models import OrdemDeServico, ItemOS
 from django.views.generic.edit import CreateView, UpdateView
-from  .forms import OrdemServicoForm, MudarStatusForm, EditarOrdemServicoForm, EditarOrdemCompletaForm
+from  .forms import OrdemServicoForm, MudarStatusForm, EditarOrdemServicoForm, EditarOrdemCompletaForm, AdcionarItemForm
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bootstrap_modal_forms.generic import BSModalUpdateView
-from django.views.generic import TemplateView
+from bootstrap_modal_forms.generic import BSModalUpdateView, BSModalCreateView
+from decimal import Decimal
 
 
 class BaseListFilter(LoginRequiredMixin, ListView):
@@ -60,6 +60,18 @@ class OrdemDeServicoCompletaView(LoginRequiredMixin, UpdateView):
     model = OrdemDeServico
     form_class = EditarOrdemCompletaForm
     template_name = 'ordens/ordem_completa.html'
+
+class AdicionarItemOS(BSModalCreateView):
+    model = ItemOS
+    template_name = 'ordens/adiconar_item_os.html'
+    form_class = AdcionarItemForm
+
+    def form_valid(self, form):
+        self.ordem = OrdemDeServico.objects.get(id=self.kwargs['pk'])
+        form.instance.ordem_servico = self.ordem
+        form.instance.total =  Decimal(form.instance.preco * form.instance.quantidade)
+        return super(AdicionarItemOS, self).form_valid(form)
+
 
 def export_ordem_pdf(request, id):
     ordem = OrdemDeServico.objects.get(id=id)
