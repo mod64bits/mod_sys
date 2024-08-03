@@ -1,0 +1,367 @@
+{% extends 'base/base.html' %}
+{% load widget_tweaks %}
+{% load formsetify %}
+{% render_form form "bootstrap" %}
+{%  load status_ordem %}
+{% block content %}
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+    <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Inline Charts</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Inline Charts</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-default">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="fas fa-bullhorn"></i>
+                                    Callouts
+                                </h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>{{ object.cliente }}</h5>
+                                            <p>{{ object.cliente.documento }}</p>
+                                            <p>{{ object.cliente.telefone }}</p>
+                                            <p>{{ object.cliente.email }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>Abertura: {{ object.created }}</h5>
+                                            <p>Fechamento: {{ bject.fim_execucao|default:"Ordem Aberta" }}</p>
+                                            <p>Prioridade: {{ object.prioridade|ordem_prioridade|safe }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>{{ object.codigo|default:"Sem Código cadastrado " }}</h5>
+                                            <p>Inicio: {{ object.inicio_execucao }}</p>
+                                            <p>Tempo Tempo Serviço: {{ object.tempo_servico }}</p>
+                                            <p>Tempo Total: {{ object.tempo_total }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card-body">
+                                        <div class="callout callout-info">
+                                            <h5>Valor Total: {{ object.total|default:"0,00" }}</h5>
+                                            <p>Valor Equipamentos: {{ object.total_equipamentos|default:"0,00" }}</p>
+                                            <p>Fim: {{ object.fim_execucao }}</p>
+                                            <p>Tempo Tempo Serviço: {{ object.tempo_servico }}</p>
+                                            <p>Tempo Total: {{ object.tempo_total }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- Envios -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Application buttons -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Ações</h3>
+                            </div>
+                            <div class="card-body">
+                                <a class="btn btn-app bg-secondary">
+
+                                    <i class="fas fa-barcode"></i> PDF
+                                </a>
+                                <a class="btn btn-app bg-success">
+                                    <i class="fas fa-users"></i> Whatsapp
+                                </a>
+                                <button type="button" id="add-item" class="btn btn-app bg-danger" data-form-url="{% url 'ordens:adcionar_item' object.id  %}">
+
+                                    <i class="fas fa-inbox"></i> Email
+                                </button>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Application buttons -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Atualizar</h3>
+                            </div>
+                            <div class="card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.media}}
+                                {% if form.errors %}
+  {% for field in form %}
+    {% for error in field.errors %}
+      <p> {{ error }} </p>
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>{{ form.prioridade.label }}</label>
+                                                {% render_field form.prioridade class="form-control select2bs4" %}
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-4">
+                                            <label>{{ form.solicitante.label }}</label>
+                                            {% render_field form.solicitante class="form-control" %}
+                                        </div>
+                                         <div class="col-sm-4">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>{{ form.responsavel.label }}</label>
+                                                {% render_field form.responsavel class="form-control select2bs4" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+                                            {% for error in form.non_field_errors %}
+                                                {{ error }}
+                                            {% endfor %}
+
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                <label>{{ form.cliente.label }}</label>
+                                                {% render_field form.cliente class="form-control select2bs4" %}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>{{ form.inicio_execucao.label }}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                    </div>
+                                                    {% render_field form.inicio_execucao class="form-control" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>{{ form.fim_execucao.label }}</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                                    </div>
+                                                    {% render_field form.fim_execucao class="form-control" %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                                
+                                                {% render_field form.descricao class="form-control" %}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <!-- text input -->
+                                            <div class="form-group">
+                                              
+                                                {% render_field form.resolucao class="form-control" %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Salvar</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                    </div>
+                </div>
+             <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Itens</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0" style="height: 300px;">
+                                <table class="table table-head-fixed text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço</th>
+                                        <th>Total</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in itens_os %}
+                                        <tr>
+                                            <td><a href="{% url 'ordens:update_ordem' item.id %}"> {{ item.cliente.nome }}</a></td>
+                                            <td>{{ item.solicitante }}</td>
+                                            <td>{{ item.emissao }}</td>
+                                            <td>{{ item.status|ordem_status|safe }}</td>
+                                            <td class="project-actions text-right">
+                                                <button type="button" class="update-ordem btn btn-primary btn-sm" data-form-url="{% url 'ordens:atualizar_ordem' item.id %}">
+                                                    <i class="fas fa-folder">
+                                                    </i>
+                                                    View
+                                                </button>
+                                                <button type="button" class="update-status btn btn-info btn-sm"  data-form-url="{% url 'ordens:mudar_os_status' item.id %}">
+                                                    <i class="fas fa-pencil-alt">
+                                                    </i>
+                                                    Status
+                                                </button>
+                                                <a class="btn btn-dark btn-sm" href="{% url 'ordens:export-pdf' item.id %}">
+                                                    <i class="fas fa-print">
+                                                    </i>
+                                                    Print
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-top">
+                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /.card -->
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+        $(document).ready(function() {
+            function addItemModalForm() {
+                $("#add-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url")});
+                });
+            }
+            addItemModalForm();
+
+            function updateItemModalForm() {
+                $(".update-item").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateItemModalForm();
+
+            function deleteClienteForm() {
+                $(".delete-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteClienteForm();
+
+            $(".read-item").each(function () {
+                $(this).modalForm({formURL: $(this).data("form-url")});
+            });
+            function addServicoModalForm() {
+                $("#add-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        modalID: "#modal-xl"
+                    });
+                });
+            }
+            addServicoModalForm();
+            function updateServicoModalForm() {
+                $(".update-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-xl",
+                    });
+                });
+            }
+            updateServicoModalForm()
+            $(".read-servico").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    modalID: "#modal-xl",
+                });
+            });
+            function deleteServicoForm() {
+                $(".delete-servico").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteServicoForm();
+        });
+    </script>
+{% endblock scripts %}

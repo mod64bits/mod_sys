@@ -53,3 +53,12 @@ class Datas:
         if dia == 6:
             return data_vencimento + datetime.timedelta(days=1)
         return data_vencimento
+
+
+def gerador_de_codigo(cliente):
+    _cli = cliente.split()
+    cli = [i[0].upper() for i in _cli]
+    _codigo = ''.join([i[0].upper() for i in cli])
+    codigo = _codigo + str(datetime.datetime.now())
+
+    return codigo

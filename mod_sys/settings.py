@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'wkhtmltopdf',
+    'django_filters',
+    'formset',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
     # apps
     'apps.base',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'apps.clientes',
     'apps.dashboard',
     'apps.relatorios',
+    'apps.ordemdeservicos',
 
 ]
 
@@ -198,7 +201,7 @@ CKEDITOR_CONFIGS = {
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
         # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        'height': 291,
+        'height': 150,
         'width': '116%',
         # 'filebrowserWindowHeight': 725,
         # 'filebrowserWindowWidth': 940,

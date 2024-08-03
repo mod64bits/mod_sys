@@ -108,7 +108,7 @@ class ItemMaoDeObra(BaseModel):
         return f"{self.servico} - {self.valor}"
 
     def get_absolute_url(self):
-        return reverse('orcamento:update_orcamento', kwargs={'pk': self.orcamento.id})
+        return reverse('ordens:update_ordem', kwargs={'pk': self.orcamento.id})
 
 
 class InformacoesOrcamento(BaseModel):

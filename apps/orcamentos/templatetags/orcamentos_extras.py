@@ -36,7 +36,7 @@ def status(value):
         '''
     if value == 2:
         return f'''
-           <small class="badge badge-warning"><i class="far fa-clock"></i> Cancelada</small>
+           <small class="badge bg-success"><i class="far fa-clock"></i> Aprovado</small>
         '''
     if value == 3:
         return f'''
