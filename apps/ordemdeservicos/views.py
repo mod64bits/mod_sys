@@ -61,6 +61,13 @@ class OrdemDeServicoCompletaView(LoginRequiredMixin, UpdateView):
     form_class = EditarOrdemCompletaForm
     template_name = 'ordens/ordem_completa.html'
 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['itens_os'] = ItemOS.objects.filter(ordem_servico_id=self.kwargs['pk'])
+        return context
+
 class AdicionarItemOS(BSModalCreateView):
     model = ItemOS
     template_name = 'ordens/adiconar_item_os.html'
@@ -70,6 +77,7 @@ class AdicionarItemOS(BSModalCreateView):
         self.ordem = OrdemDeServico.objects.get(id=self.kwargs['pk'])
         form.instance.ordem_servico = self.ordem
         form.instance.total =  Decimal(form.instance.preco * form.instance.quantidade)
+        form.instance.ordem_servico = self.ordem
         return super(AdicionarItemOS, self).form_valid(form)
 
 

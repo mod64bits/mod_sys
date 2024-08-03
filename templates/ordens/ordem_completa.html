@@ -6,6 +6,17 @@
 {% block content %}
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
+    <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+    <div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -97,10 +108,10 @@
                                 <a class="btn btn-app bg-success">
                                     <i class="fas fa-users"></i> Whatsapp
                                 </a>
-                                <a class="btn btn-app bg-danger">
+                                <button type="button" id="add-item" class="btn btn-app bg-danger" data-form-url="{% url 'ordens:adcionar_item' object.id  %}">
 
                                     <i class="fas fa-inbox"></i> Email
-                                </a>
+                                </button>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -118,6 +129,13 @@
                                 <form method="post">
                                     {% csrf_token %}
                                     {{ form.media}}
+                                {% if form.errors %}
+  {% for field in form %}
+    {% for error in field.errors %}
+      <p> {{ error }} </p>
+    {% endfor %}
+  {% endfor %}
+{% endif %}
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <!-- text input -->
@@ -201,7 +219,149 @@
                         </div>
                     </div>
                 </div>
+             <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Itens</h3>
+
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0" style="height: 300px;">
+                                <table class="table table-head-fixed text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço</th>
+                                        <th>Total</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in itens_os %}
+                                        <tr>
+                                            <td><a href="{% url 'ordens:update_ordem' item.id %}"> {{ item.cliente.nome }}</a></td>
+                                            <td>{{ item.solicitante }}</td>
+                                            <td>{{ item.emissao }}</td>
+                                            <td>{{ item.status|ordem_status|safe }}</td>
+                                            <td class="project-actions text-right">
+                                                <button type="button" class="update-ordem btn btn-primary btn-sm" data-form-url="{% url 'ordens:atualizar_ordem' item.id %}">
+                                                    <i class="fas fa-folder">
+                                                    </i>
+                                                    View
+                                                </button>
+                                                <button type="button" class="update-status btn btn-info btn-sm"  data-form-url="{% url 'ordens:mudar_os_status' item.id %}">
+                                                    <i class="fas fa-pencil-alt">
+                                                    </i>
+                                                    Status
+                                                </button>
+                                                <a class="btn btn-dark btn-sm" href="{% url 'ordens:export-pdf' item.id %}">
+                                                    <i class="fas fa-print">
+                                                    </i>
+                                                    Print
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-top">
+                                    <li class="page-item"><a class="page-link" href="#">«</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">»</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /.card -->
+
+                    </div>
+                </div>
             </div>
         </section>
     </div>
 {% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+        $(document).ready(function() {
+            function addItemModalForm() {
+                $("#add-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url")});
+                });
+            }
+            addItemModalForm();
+
+            function updateItemModalForm() {
+                $(".update-item").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateItemModalForm();
+
+            function deleteClienteForm() {
+                $(".delete-item").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteClienteForm();
+
+            $(".read-item").each(function () {
+                $(this).modalForm({formURL: $(this).data("form-url")});
+            });
+            function addServicoModalForm() {
+                $("#add-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        modalID: "#modal-xl"
+                    });
+                });
+            }
+            addServicoModalForm();
+            function updateServicoModalForm() {
+                $(".update-servico").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-xl",
+                    });
+                });
+            }
+            updateServicoModalForm()
+            $(".read-servico").each(function () {
+                $(this).modalForm({
+                    formURL: $(this).data("form-url"),
+                    modalID: "#modal-xl",
+                });
+            });
+            function deleteServicoForm() {
+                $(".delete-servico").each(function () {
+                    $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+
+                });
+            }
+            deleteServicoForm();
+        });
+    </script>
+{% endblock scripts %}

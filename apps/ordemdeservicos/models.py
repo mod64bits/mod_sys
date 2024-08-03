@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import signals
 from django.core.validators import MinValueValidator
 from decimal import Decimal
 from apps.users.models import User
@@ -80,10 +81,13 @@ class ItemOS(BaseModel):
     def __str__(self) -> str:
         return f"{self.ordem_servico.descricao}-{self.item}"
 
+    def get_absolute_url(self):
+        return reverse('ordens:update_ordem', kwargs={'pk': self.id})
+
 
 
 def update_total_item_ordem(sender, instance, signal, *args, **kwargs):
-    ordem = instance.ordem_servico
+    ordem = instance
     total_item = 0
     preco = 0
 
@@ -95,21 +99,12 @@ def update_total_item_ordem(sender, instance, signal, *args, **kwargs):
             continue
         total_item += item.total
     for product in obj:
-        total_item = ordem.preco * product.quantidade
+        total_item = product.preco * product.quantidade
+    ordem.total_equipamentos = total_item
+    ordem.total = Decimal(ordem.total + total_item)
+    ordem.save()
 
 
-    _obj_produto_compra = ItemProduto.objects.filter(orcamento=orcamento)
-    _obj_compra_mao_de_obra = ItemMaoDeObra.objects.filter(orcamento=orcamento)
-    tota_item_compra = 0
-    for item_comp in _obj_produto_compra:
-        tota_item_compra += item_comp.produto.preco_compra * item_comp.quantidade
+signals.post_save.connect(update_total_item_ordem, sender=ItemOS)
+signals.post_delete.connect(update_total_item_ordem, sender=ItemOS)
 
-    orcamento.total_equipamentos = total_produtos
-    orcamento.total_mao_de_obra = total_mao_de_obra
-    orcamento.total = total_produtos + total_mao_de_obra
-
-    orcamento.total_compra = total_compra
-
-    orcamento.total_lucro = ((total_produtos + total_mao_de_obra) - tota_item_compra)
-
-    orcamento.save()

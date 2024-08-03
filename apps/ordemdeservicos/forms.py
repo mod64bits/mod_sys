@@ -67,12 +67,9 @@ class AdcionarItemForm(BSModalModelForm):
         fields = '__all__'
 
 
-
-
-
-    def save(self, commit=True):
-        instance = super(AdcionarItemForm, self).save(commit=False)
-        instance.total = instance.preco * instance.quantidade
-        if commit:
-            instance.save()
-        return instance
+    # def save(self, commit=True):
+    #     instance = super(AdcionarItemForm, self).save(commit=False)
+    #     instance.total = instance.preco * instance.quantidade
+    #     if commit:
+    #         instance.save()
+    #     return instance
