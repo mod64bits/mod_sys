@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.relatorios',
     'apps.ordemdeservicos',
+    'apps.payment',
 
 ]
 
