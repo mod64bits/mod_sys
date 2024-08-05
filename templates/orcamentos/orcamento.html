@@ -246,7 +246,9 @@
                                                                                 <th>Acrecímo</th>
                                                                                 <th>Entrada</th>
                                                                                 <th>Valor Bruto</th>
-                                                                                <th>Valor com Acrecimo</th>
+                                                                                <th>Desconto</th>
+                                                                                <th>Valor Desconto</th>
+                                                                                <th>Total</th>
                                                                                 <th>Ação</th>
                                                                             </tr>
                                                                             </thead>
@@ -275,7 +277,17 @@
                                                                                         {{ payment.valor_bruto }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{ payment.total_acrecimo }}
+                                                                                        {{ payment.desconto }} %
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <small class="text-success mr-1">
+                                                                                            <i class="fas fa-arrow-down"></i>
+                                                                                            {{ payment.valor_desconto }}
+                                                                                        </small>
+                                                                                        {{ payment.total_desconto }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{ payment.total }}
                                                                                     </td>
                                                                                     <td class="project-actions text-right">
                                                                                         <a href="{% url 'payment:payment_orcamento_edit' payment.id %}"  class="update-item btn btn-info btn-sm">

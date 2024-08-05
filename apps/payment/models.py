@@ -16,6 +16,15 @@ class Payment(BaseModel):
     acrecimo = models.DecimalField("Acrécimo",  max_digits=16, null=True, blank=True, decimal_places=2,
                                       validators=[
                                           MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    desconto = models.DecimalField("Desconto", max_digits=16, null=True, blank=True, decimal_places=2,
+                                   validators=[
+                                       MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    valor_desconto = models.DecimalField("Desconto", max_digits=16, null=True, blank=True, decimal_places=2,
+                                   validators=[
+                                       MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    total_desconto = models.DecimalField("Total Desconto", max_digits=16, null=True, blank=True, decimal_places=2,
+                                   validators=[
+                                       MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
 
     valor_entrada = models.DecimalField("Entrada", max_digits=16, null=True, blank=True, decimal_places=2,
                                       validators=[
@@ -31,7 +40,7 @@ class Payment(BaseModel):
     valor_acrecimo = models.DecimalField("Valor Acrecimo",  max_digits=16, null=True, blank=True, decimal_places=2,
                                       validators=[
                                           MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    total_acrecimo = models.DecimalField('Total Acrécimo', decimal_places=2,  max_digits=16, null=True, blank=True, validators=[
+    total = models.DecimalField('Total', decimal_places=2,  max_digits=16, null=True, blank=True, validators=[
                                           MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     orcamento = models.ForeignKey(
         Orcamento, on_delete=models.PROTECT,
@@ -40,7 +49,15 @@ class Payment(BaseModel):
         verbose_name="Orcamento"
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.forma_pagamento == "AVISTA":
+            self._meta.get_field('desconto').hidden  = False
+            self._meta.get_field('desconto').hidden  = False
 
+        else:
+            self._meta.get_field('desconto').hidden  = True
+            self._meta.get_field('desconto').hidden  = True
 
     def get_absolute_url(self):
         return reverse('orcamentos:orcamento', kwargs={'pk': self.orcamento.id})

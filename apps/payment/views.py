@@ -10,7 +10,8 @@ from .models import Payment
 from django.db.models import signals
 
 from apps.orcamentos.models import Orcamento
-from apps.core.calculos import valor_porcentagem
+from apps.core.calculos import valor_porcentagem, desconto_avista
+
 
 class AdcionarPagamentoOrcamentoView(LoginRequiredMixin, CreateView):
     model = Payment
@@ -43,12 +44,20 @@ class DeletarPagamentoOrcamentoView(LoginRequiredMixin, DeleteView):
 
 def update_total_payment(sender, instance, signal, *args, **kwargs):
     total = instance.orcamento.total
+
+    if instance.forma_pagamento == 'AVISTA' and instance.desconto > 0:
+        descontos = desconto_avista(total, instance.desconto)
+        instance.valor_desconto = descontos["desconto"]
+        instance.total_desconto = descontos["valor_final"]
+        total = descontos['valor_final']
+
     instance.valor_bruto =  instance.orcamento.total
     if instance.valor_entrada != decimal.Decimal('0.00') or None == instance.valor_entrada:
         if not  instance.valor_entrada:
             instance.valor_entrada = decimal.Decimal('0.00')
         valor_com_entrada =  instance.orcamento.total -  instance.valor_entrada
         obj_valores = valor_porcentagem(instance.acrecimo, valor_com_entrada)
+
     else:
         obj_valores = valor_porcentagem(instance.acrecimo, total)
 
@@ -61,8 +70,10 @@ def update_total_payment(sender, instance, signal, *args, **kwargs):
     else:
         instance.valor_parcelas = obj_valores['total']
 
-    instance.total_acrecimo = decimal.Decimal(total_acrecimo)
+    instance.total= decimal.Decimal(total_acrecimo)
     instance.valor_acrecimo = decimal.Decimal(acrecimo)
+    # if instance.forma_pagamento == 'AVISTA':
+    #     instance.valor_entrada = total
 
 
 signals.pre_save.connect(update_total_payment, sender=Payment)
