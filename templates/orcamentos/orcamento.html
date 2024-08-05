@@ -260,7 +260,7 @@
                                                                                         {{ payment.qt_parcelas }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        10,00
+                                                                                        {{ payment.valor_parcelas }}
                                                                                     </td>
 
                                                                                     <td>
@@ -277,8 +277,17 @@
                                                                                     <td>
                                                                                         {{ payment.total_acrecimo }}
                                                                                     </td>
-                                                                                    <td>
-                                                                                        ação
+                                                                                    <td class="project-actions text-right">
+                                                                                        <a href="{% url 'payment:payment_orcamento_edit' payment.id %}"  class="update-item btn btn-info btn-sm">
+                                                                                            <i class="fas fa-pencil-alt">
+                                                                                            </i>
+                                                                                            Editar
+                                                                                        </a>
+                                                                                        <a href="{% url 'payment:delete_payment_orcamento' payment.id %}"  class="delete-item btn btn-danger btn-sm">
+                                                                                            <i class="fas fa-trash">
+                                                                                            </i>
+                                                                                            Apagar
+                                                                                        </a>
                                                                                     </td>
                                                                                 </tr>
                                                                             {% endfor %}

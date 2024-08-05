@@ -37,14 +37,16 @@
               <form method="post" action="">
     {% csrf_token %}
 
-    <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel2">Produto</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+ 
 
-    <div class="modal-body">
+  
+        <div class="field item form-group">
+            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.valor_entrada.label }}<span class="required">*</span></label>
+            <div class="col-md-6 col-sm-6">
+                {% render_field form.valor_entrada class="form-control"%}
+                 <div class="invalid-feedback">{{ form.valor_entrada.errors|first }}</div>
+            </div>
+        </div>
         <div class="col-md-12">
             <div class="form-group">
 
@@ -67,10 +69,10 @@
                   <div class="invalid-feedback">{{ form.acrecimo.errors|first }}</div>
             </div>
         </div>
-    </div>
+  
 
-    <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+    <div class="card-footer justify-content-between">
+      
         <button type="submit" class="btn btn-primary">Salvar</button>
     </div>
 
@@ -102,7 +104,7 @@
             theme: 'bootstrap4'
         })
     })
-    
+
 
 </script>
 

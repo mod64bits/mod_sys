@@ -25,6 +25,9 @@ class Payment(BaseModel):
                                       validators=[
                                           MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     qt_parcelas = models.IntegerField("Quantidade de Parcelas", default=1)
+    valor_parcelas = models.DecimalField("Valor Parcelas", max_digits=16, null=True, blank=True, decimal_places=2,
+                                         validators=[
+                                             MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     valor_acrecimo = models.DecimalField("Valor Acrecimo",  max_digits=16, null=True, blank=True, decimal_places=2,
                                       validators=[
                                           MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))

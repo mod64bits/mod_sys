@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 from .forms import PaymentForm
 from .models import Payment
 from django.db.models import signals
@@ -32,14 +33,36 @@ class EditarPagamentoOrcamentoView(LoginRequiredMixin, UpdateView):
     form_class = PaymentForm
     template_name = "payment/adcionar_pagamento_orcamento.html"
 
+class DeletarPagamentoOrcamentoView(LoginRequiredMixin, DeleteView):
+    model = Payment
+    template_name = "payment/payment_model_confirm_delete.html"
+    def get_success_url(self):
+        obj = self.get_object()
+        return reverse_lazy('orcamentos:orcamento', args=[obj.orcamento.id])
+
 
 def update_total_payment(sender, instance, signal, *args, **kwargs):
-    obj_valores = valor_porcentagem(instance.acrecimo, instance.orcamento.total)
+    total = instance.orcamento.total
+    instance.valor_bruto =  instance.orcamento.total
+    if instance.valor_entrada != decimal.Decimal('0.00') or None == instance.valor_entrada:
+        if not  instance.valor_entrada:
+            instance.valor_entrada = decimal.Decimal('0.00')
+        valor_com_entrada =  instance.orcamento.total -  instance.valor_entrada
+        obj_valores = valor_porcentagem(instance.acrecimo, valor_com_entrada)
+    else:
+        obj_valores = valor_porcentagem(instance.acrecimo, total)
+
     acrecimo = obj_valores['aumento']
     total_acrecimo = decimal.Decimal(obj_valores['total'])
-    instance.total_acrecimo =  decimal.Decimal(total_acrecimo)
-    instance.valor_acrecimo =  decimal.Decimal(acrecimo)
-    instance.valor_bruto =  instance.orcamento.total
+
+
+    if instance.qt_parcelas > 1:
+        instance.valor_parcelas = obj_valores['total'] / instance.qt_parcelas
+    else:
+        instance.valor_parcelas = obj_valores['total']
+
+    instance.total_acrecimo = decimal.Decimal(total_acrecimo)
+    instance.valor_acrecimo = decimal.Decimal(acrecimo)
 
 
 signals.pre_save.connect(update_total_payment, sender=Payment)
