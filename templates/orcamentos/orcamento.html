@@ -132,9 +132,9 @@
                             <a class="btn btn-app" href="{% url 'relatorios:orcamento_simples' orcamento.id %}">
                                 <i class="fas fa-save"></i> Orcamento Simples
                             </a>
-                            <a class="btn btn-app">
+                            <a class="btn btn-app" href="{% url 'prints:print_orcamento' orcamento.id %}">
                                 <span class="badge bg-warning">3</span>
-                                <i class="fas fa-bullhorn"></i> Notifications
+                                <i class="fas fa-bullhorn"></i> Imprimir Orcamento
                             </a>
                             <a class="btn btn-app">
                                 <span class="badge bg-success">300</span>

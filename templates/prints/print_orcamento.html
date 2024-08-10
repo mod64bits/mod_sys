@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   
+   
+    <title>Document</title>
+</head>
+<body>
+<style>
+    @font-face {
+  font-family: Pacifico;
+  src: url(pacifico.ttf);
+}
+@font-face {
+  font-family: Source Sans Pro;
+  font-weight: 400;
+  src: url(sourcesanspro-regular.otf);
+}
+@font-face {
+  font-family: Source Sans Pro;
+  font-weight: 700;
+  src: url(sourcesanspro-bold.otf);
+}
+
+@page {
+  font-family: Pacifico;
+  margin: 3cm;
+  @bottom-left {
+    color: #1ee494;
+    content: '♥ Thank you!';
+  }
+  @bottom-right {
+    color: #a9a;
+    content: 'contact@courtbouillon.org | courtbouillon.org';
+    font-size: 9pt;
+  }
+}
+
+html {
+  color: #14213d;
+  font-family: Source Sans Pro;
+  font-size: 11pt;
+  line-height: 1.6;
+}
+body {
+  margin: 0;
+}
+
+h1 {
+  color: #1ee494;
+  font-family: Pacifico;
+  font-size: 40pt;
+  margin: 0;
+}
+h5 {
+  color: #22285e;
+  font-family: Pacifico;
+  font-size: 25pt;
+  margin: 0;
+}
+
+aside {
+  display: flex;
+  margin: 2em 0 4em;
+}
+aside address {
+  font-style: normal;
+  white-space: pre-line;
+}
+aside address#from {
+  color: #a9a;
+  flex: 1;
+}
+aside address#to {
+  text-align: right;
+}
+
+dl {
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
+}
+dt, dd {
+  display: inline;
+  margin: 0;
+}
+dt {
+  color: #a9a;
+}
+dt::before {
+  content: '';
+  display: block;
+}
+dt::after {
+  content: ':';
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th {
+  border-bottom: .2mm solid #a9a;
+  color: #a9a;
+  font-size: 10pt;
+  font-weight: 400;
+  padding-bottom: .25cm;
+  text-transform: uppercase;
+}
+td {
+  padding-top: 7mm;
+}
+td:last-of-type {
+  color: #1ee494;
+  font-weight: bold;
+  text-align: right;
+}
+th, td {
+  text-align: center;
+}
+th:first-of-type, td:first-of-type {
+  text-align: left;
+}
+th:last-of-type, td:last-of-type {
+  text-align: right;
+}
+footer {
+  content: '';
+  display: block;
+  height: 6cm;
+}
+table#total {
+  background: #f6f6f6;
+  border-color: #f6f6f6;
+  border-style: solid;
+  border-width: 2cm 3cm;
+  bottom: 0;
+  font-size: 12pt;
+  margin: 0 -3cm;
+  position: absolute;
+  width: 18cm;
+}
+
+.card {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+  border-radius: 4px;
+}
+#forma-pagamento {
+    background: #f6f6f6;
+    border-color: #f6f6f6;
+    border-style: solid;
+    border-width: 2cm 3cm;
+    bottom: 0;
+    font-size: 12pt;
+    margin: 0 -3cm;
+    position: relative;
+    width: 18cm;
+    
+}
+</style>
+ <h1>mod64bits</h1>
+
+    <aside>
+      <address id="from">
+        mod64bits Soluções em TI
+        mod64bits@gmail.com
+        19 99966-4769
+      </address>
+
+      <address id="to">
+       {{ orcamento.cliente.nome }}
+       {{ orcamento.cliente.documento }}
+       {{ orcamento.cliente.telefone }}
+       {{ orcamento.cliente.email|default:"Sem e-mail cadastrado" }}
+       
+      </address>
+    </aside>
+
+    <dl id="informations">
+      <dt>Validade</dt>
+      <dd>{{ orcamento.validade }}</dd>
+    </dl>
+{% if orcamento.descricao %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><h5>Descrição</h5></h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+{% endif %}
+    <table>
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>QT</th>
+          <th>Valor UND</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in orcamento.produto_orcamento.all %}
+        <tr>
+          <td>{{ item.produto.nome }}</td>
+          <td>{{ item.quantidade }}</td>
+          <td>{{ item.preco }}</td>
+          <td>{{ item.total }}</td>
+        </tr>
+       {% endfor %}
+      
+      </tbody>
+    </table>
+    
+    <footer>
+      <table id="total">
+        <thead>
+          <tr>
+            <th>Total Mão de Obra</th>
+            <th>Total Equipamentos</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+               {{ orcamento.total_mao_de_obra }}
+            </td>
+            <td>{{ orcamento.total_equipamentos }}</td>
+            <td>{{ orcamento.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </footer>
+   <footer>
+      <table id="forma-pagamento">
+        <thead>
+          <tr>
+            <th>Forma de Pagamento</th>
+            <th>Desconto</th>
+            <th>Valor Desconto</th>
+            <th>Parcelas</th>
+            <th>Valor Parcelas</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for payment_form in orcamento.payment.all %}
+          <tr>
+            <td>{{ payment_form.forma_pagamento }}</td>
+            <td>{{ payment_form.desconto }}</td>
+            <td>{{ payment_form.valor_desconto }}</td>
+            <td>{{ payment_form.total_desconto }}</td>
+            <td>{{ payment_form.valor_parcelas }}</td>
+        
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </footer>
+
+  </body>
+
+</html>

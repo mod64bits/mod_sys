@@ -1,107 +1,112 @@
-    {% extends 'base/base.html' %}
+{% extends 'base/base.html' %}
 {% load widget_tweaks %}
 {% with WIDGET_ERROR_CLASS='is-invalid' %}
-{% load widget_tweaks %}
+    {% load widget_tweaks %}
 
- {% block content %}
+    {% block content %}
+        <style>
+        .hidden {
+            display: none;
+        }
+    </style>
         <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Editar Informações</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">informações/{{ object.cliente.nome }}</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Editar Informações</h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">informações/{{ object.cliente.nome }}</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="container">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-           <div class="card card-warning">
-              <div class="card-header">
-                <h3 class="card-title">{{ object.cliente }}</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-              <form method="post" action="">
-    {% csrf_token %}
+            <!-- Main content -->
+            <div class="container">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card card-warning">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ object.cliente }}</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <form method="post" action="">
+                                        {% csrf_token %}
 
- 
 
-  
-        <div class="field item form-group">
-            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.valor_entrada.label }}<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6">
-                {% render_field form.valor_entrada class="form-control"%}
-                 <div class="invalid-feedback">{{ form.valor_entrada.errors|first }}</div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+
+                                                <label for="{{ form.forma_pagamento.id }}">{{ form.forma_pagamento.label }}</label>
+                                                {% render_field form.forma_pagamento class="form-control select2bs4" type="text" onchange="toggleDivs()" role="textbox" style="width: 100%;"%}
+                                                <div class="invalid-feedback">{{ form.forma_pagamento.errors|first }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="field item form-group hidden" id="valor_entrada">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.valor_entrada.label }}<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                {% render_field form.valor_entrada class="form-control"%}
+                                                <div class="invalid-feedback">{{ form.valor_entrada.errors|first }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.desconto.label }}<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                {% render_field form.desconto class="form-control"%}
+                                                <div class="invalid-feedback">{{ form.desconto.errors|first }}</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="field item form-group" id="qt_parcelas">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.qt_parcelas.label }}<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                {% render_field form.qt_parcelas class="form-control"%}
+                                                <div class="invalid-feedback">{{ form.qt_parcelas.errors|first }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="field item form-group" id="acrecimo">
+                                            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.acrecimo.label }}<span class="required">*</span></label>
+                                            <div class="col-md-6 col-sm-6">
+                                                {% render_field form.acrecimo class="form-control"  %}
+                                                <div class="invalid-feedback">{{ form.acrecimo.errors|first }}</div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="card-footer justify-content-between">
+
+                                            <button type="submit" class="btn btn-primary">Salvar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+
+
+                        </div>
+                        <!-- /.row -->
+                    </div><!-- /.container-fluid -->
+                </div>
+                <!-- /.content -->
             </div>
         </div>
-                  <div class="field item form-group">
-            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.desconto.label }}<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6">
-                {% render_field form.desconto class="form-control"%}
-                 <div class="invalid-feedback">{{ form.desconto.errors|first }}</div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-
-                <label for="{{ form.forma_pagamento.id }}">{{ form.forma_pagamento.label }}</label>
-                {% render_field form.forma_pagamento class="form-control select2bs4" type="text"  role="textbox" style="width: 100%;"%}
-                 <div class="invalid-feedback">{{ form.forma_pagamento.errors|first }}</div>
-            </div>
-        </div>
-        <div class="field item form-group">
-            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.qt_parcelas.label }}<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6">
-                {% render_field form.qt_parcelas class="form-control"%}
-                 <div class="invalid-feedback">{{ form.qt_parcelas.errors|first }}</div>
-            </div>
-        </div>
-         <div class="field item form-group">
-            <label class="col-form-label col-md-3 col-sm-3  label-align">{{ form.acrecimo.label }}<span class="required">*</span></label>
-            <div class="col-md-6 col-sm-6">
-                {% render_field form.acrecimo class="form-control"  %}
-                  <div class="invalid-feedback">{{ form.acrecimo.errors|first }}</div>
-            </div>
-        </div>
-  
-
-    <div class="card-footer justify-content-between">
-      
-        <button type="submit" class="btn btn-primary">Salvar</button>
-    </div>
-
-</form>
-              </div>
-              <!-- /.card-body -->
-            </div>
-
-
-
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-  </div>
     {% endblock content %}
 
 
 
 {% endwith %}
-
 <script>
     $(function () {
         $('.select2').select2()
@@ -114,4 +119,35 @@
 
 
 </script>
+{% block scripts %}
 
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            toggleDivs(); // Call the function on page load
+        });
+
+        function toggleDivs() {
+            var dropdown = document.getElementById("id_forma_pagamento");
+            var selectedValue = dropdown.value;
+
+            // Define as divs que queremos esconder quando "AVISTA" for selecionado
+            var divsToToggle = ["valor_entrada", "valor_entrada", "qt_parcelas", "acrecimo"];
+
+            // Esconder ou mostrar divs com base na seleção
+            divsToToggle.forEach(function(divId) {
+                var div = document.getElementById(divId);
+                if (div) {
+                    if (selectedValue === "AVISTA") {
+                        div.classList.add("hidden");
+                    } else {
+                        div.classList.remove("hidden");
+                    }
+                }
+            });
+        }
+
+
+
+    </script>
+{% endblock scripts %}
