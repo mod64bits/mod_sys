@@ -1,32 +1,48 @@
-import dash
-from dash import dcc, html
-import dash_bootstrap_components as dbc
-from django_plotly_dash import DjangoDash
-from .components import sidebar
-app = DjangoDash('Dashbord')   # replaces dash.Dash
-
-template_theme1 = "flatly"
-template_theme2 = "vapor"
-url_theme1 = dbc.themes.CYBORG
-url_theme2 = dbc.themes.COSMO
-tab_card = {'height': '100%'}
+import plotly.graph_objs as go
+from plotly.offline import plot
 
 
+def plot_barchart(x, y, title, x_label, y_label):
+    fig = go.Figure(data=go.Bar(name='BarChart', x=x, y=y))
 
-content = html.Div(id="dashboard-content")
-app.layout = dbc.Row([
-    dbc.Col([
-        dcc.Location(id='url'),
-        sidebar.layout
-    ], md=2),
-    dbc.Col([
-        content
-        
-    ], md=10)
-       
-    ])
+    fig.update_layout(
+        title_text = title,
+        xaxis_title = x_label,
+        yaxis_title = y_label,
+        # width=300,
+        # height=300,
+        template=None,
+        margin=dict(l=40, r=20, t=30, b=40)
+    )
 
+    barchart = plot({'data': fig}, output_type='div')
+    return barchart
 
+def plot_linechart(x, y, title, x_label, y_label):
+    fig = go.Figure(data=go.Line(name='LineChart', x=x, y=y))
+    fig.update_layout(
+        title_text = title,
+        xaxis_title = x_label,
+        yaxis_title = y_label,
+        # width=300,
+        # height=300,
+        template=None,
+        margin=dict(l=40, r=20, t=30, b=40),
+    )
 
-# =========  Callbacks  =========== #
+    linechart = plot({'data': fig}, output_type='div')
+    return linechart
 
+def plot_piechart(names, values, title, legend):
+    fig = go.Figure(data=go.Pie(name='PieChart', values=values, labels=names))
+
+    fig.update_layout(
+        title_text = title,
+        # width=300,
+        # height=300,
+        template=None,
+        margin=dict(l=40, r=20, t=30, b=40),
+    )
+
+    piechart = plot({'data': fig}, output_type='div')
+    return piechart
