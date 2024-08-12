@@ -51,6 +51,10 @@ def update_total_payment(sender, instance, signal, *args, **kwargs):
         instance.total_desconto = descontos["valor_final"]
         total = descontos['valor_final']
 
+    if instance.forma_pagamento != 'AVISTA' and instance.desconto <= 0:
+        instance.desconto = 0
+        instance.valor_desconto = 0
+
     instance.valor_bruto =  instance.orcamento.total
     if instance.valor_entrada != decimal.Decimal('0.00') or None == instance.valor_entrada:
         if not  instance.valor_entrada:
@@ -76,4 +80,5 @@ def update_total_payment(sender, instance, signal, *args, **kwargs):
     #     instance.valor_entrada = total
 
 
+signals.pre_save.connect(update_total_payment, sender=Payment)
 signals.pre_save.connect(update_total_payment, sender=Payment)
