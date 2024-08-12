@@ -23,7 +23,7 @@ class ListaOrcamentoView(LoginRequiredMixin, ListView):
         context['active_orcamentos'] = True
         return context
 
-class MudarStausOrcamentoView(BSModalUpdateView):
+class MudarStausOrcamentoView(LoginRequiredMixin, BSModalUpdateView):
     model = Orcamento
     template_name = 'orcamentos/mudar_status.html'
     form_class = MudarStatusForm

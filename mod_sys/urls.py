@@ -10,12 +10,16 @@ from apps.servicos import urls as servicos_url
 from apps.orcamentos import urls as orcamentos_url
 from apps.relatorios import urls as relatorios_urls
 from apps.ordemdeservicos import urls as ordens_url
+from apps.payment import urls as payment_urls
+from apps.prints import urls as prints_urls
 
 urlpatterns = [
 
     path('', include(dashboard_urls)),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
+    path('print/', include(prints_urls)),
     path('relatorios/', include(relatorios_urls)),
+    path('pagamentos/', include(payment_urls)),
     path('orcamentos/', include(orcamentos_url)),
     path('ordens/', include(ordens_url)),
     path('produtos/', include(produtos_url)),

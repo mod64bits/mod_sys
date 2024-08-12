@@ -8,10 +8,13 @@ from django_weasyprint import WeasyTemplateResponseMixin
 from django_weasyprint.views import WeasyTemplateResponse
 from django_weasyprint.utils import django_url_fetcher
 
+from apps.orcamentos.models import Orcamento
+
 
 class PrintDetailView(DetailView):
-    # vanilla Django DetailView
-    template_name = 'mymodel.html'
+    model = Orcamento
+    template_name = 'prints/print_orcamento.html'
+    object_name = 'orcamento'
 
 
 
@@ -28,9 +31,9 @@ class CustomWeasyTemplateResponse(WeasyTemplateResponse):
 
 class PrintView(WeasyTemplateResponseMixin, PrintDetailView):
     # output of MyDetailView rendered as PDF with hardcoded CSS
-    pdf_stylesheets = [
-        settings.STATIC_ROOT,
-    ]
+    # pdf_stylesheets = [
+    #     settings.STATIC_URL,
+    # ]
     # show pdf in-line (default: True, show download dialog)
     pdf_attachment = False
     # custom response class to configure url-fetcher

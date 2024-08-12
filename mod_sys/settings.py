@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.relatorios',
     'apps.ordemdeservicos',
+    'apps.payment',
 
 ]
 
@@ -229,3 +230,5 @@ CKEDITOR_CONFIGS = {
 }
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+WEASYPRINT_BASEURL = '/'
