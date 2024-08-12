@@ -1,4 +1,244 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+        <div class="modal fade" role="dialog" id="modal-default">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+
+<div class="modal fade"  role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>ChartJS</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">ChartJS</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- AREA CHART -->
+
+                        <!-- /.card -->
+
+                        <!-- DONUT CHART -->
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Grafico Estatus Orçamentos</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                        <!-- PIE CHART -->
+
+                        <!-- /.card -->
+
+                    </div>
+                    <!-- /.col (LEFT) -->
+                    <div class="col-md-6">
+                        <div class="card card-purple">
+                            <div class="card-header border-transparent">
+                                <h3 class="card-title">Orcamentos Abertos</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table m-0">
+                                        <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Status</th>
+                                            <th>Validade</th>
+                                            <th>Total</th>
+                                            <th>Total Compras</th>
+                                            <th>Lucro</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for orcamento_item in orcamentos_abertos %}
+                                            <tr>
+                                                <td><a href="{% url 'orcamentos:orcamento' orcamento_item.id %}">{{ orcamento_item.cliente }}</a></td>
+                                                <td>{{ orcamento_item.status }}</td>
+                                                <td>{{ orcamento_item.validade }}</td>
+                                                <td>{{ orcamento_item.total }}</td>
+                                                <td>{{ orcamento_item.total_compra }}</td>
+                                                <td>{{ orcamento_item.total_lucro }}</td>
+                                                <td>
+                                                    <button type="button" class="update-status btn btn-info btn-sm" data-form-url="{% url 'orcamentos:mudar_status_home' orcamento_item.id %}">
+                                                        <i class="fas fa-pencil-alt">
+                                                        </i>
+                                                        Editar
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.table-responsive -->
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">Place New Order</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>
+                            </div>
+                            <!-- /.card-footer -->
+                        </div>
+
+                        <!-- BAR CHART -->
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Bar Chart</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                        <!-- STACKED BAR CHART -->
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h3 class="card-title">Stacked Bar Chart</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart">
+                                    <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+                    </div>
+                    <!-- /.col (RIGHT) -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+{% endblock content %}
+{% block scripts %}
+    <script>
+        $(function () {
+            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+            var naoEnviados =  {{ orcamentos.nao_enviados }}
+            var em_analise =  {{ orcamentos.em_analise }}
+            var aprovamos =  {{ orcamentos.aprovamos }}
+            var cancelados =  {{ orcamentos.cancelados }}
+            var regeitados =  {{ orcamentos.regeitados }}
+            var donutData        = {
+                labels: [
+                    'Não Enviados',
+                    'Em Analise',
+                    'Aprovados',
+                    'Cancelados',
+                    'Regeitado',
+
+                ],
+
+                datasets: [
+                    {
+                        data: [naoEnviados,em_analise,aprovamos,cancelados,regeitados],
+                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                    }
+                ]
+            }
+            var donutOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+            new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+
+        })
+
+    </script>
+    
+    <script>
+    $(document).ready(function() {
+        function updateStatusModalForm() {
+                $(".update-status").each(function () {
+                    $(this).modalForm({
+                        formURL: $(this).data("form-url"),
+                        asyncUpdate: false,
+                        modalID: "#modal-default",
+                    });
+                });
+            }
+
+            updateStatusModalForm()    
+        
+    })
+    
+    </script>
+{% endblock scripts %}
 
 
-{%load plotly_dash%}
-{%plotly_app name="Dashbord"%}

@@ -29,6 +29,9 @@ class MudarStausOrcamentoView(LoginRequiredMixin, BSModalUpdateView):
     form_class = MudarStatusForm
     success_url = '/orcamentos'
 
+class MudarStatusOrcamentoHomeView(MudarStausOrcamentoView):
+    success_url = '/'
+
 class NovoOrcamentoView(LoginRequiredMixin, BSModalCreateView):
     template_name = 'orcamentos/novo_orcamento.html'
     form_class = NovoOrcamentoForm
