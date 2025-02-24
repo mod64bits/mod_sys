@@ -107,6 +107,24 @@
             </ul>
           </li>
 
+         <li class="nav-item {% if menu_open_orcamento %}menu-open{% endif%}">
+            <a href="#" class="nav-link {% if menu_open_orcamento %}active{% endif %}">
+              <i class="nav-icon fas nav-icon  fa-file-alt"></i>
+              <p>
+                Ordem Serviços
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'ordens:lista_ordens' %}" class="nav-link  {% if active_orcamentos %}active{% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Lista</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
 
         </ul>
       </nav>

@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (OrdensLista, NovaOrdem, OrdemDeServicoDetalhe, export_ordem_pdf, MudarStatusOrdem,
-                    EditarOrdemServicoView, OrdemDeServicoCompletaView, AdicionarItemOS)
+                    EditarOrdemServicoView, OrdemDeServicoCompletaView, AdicionarItemOS, PrintOrdem)
 
 
 app_name = 'ordens'
@@ -16,5 +16,6 @@ urlpatterns = [
     # adcionar item a ordem de servicos
     path('adicionar/item/<uuid:pk>/', AdicionarItemOS.as_view(), name='adcionar_item'),
     path('export-pdf/<uuid:id>/', export_ordem_pdf, name='export-pdf'),
+    path('print/ordem/', PrintOrdem.as_view(), name='print-ordem'),
 
 ]

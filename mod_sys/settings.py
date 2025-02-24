@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django_filters',
     'formset',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig',
+    'compressor',
     # apps
     'apps.base',
     'apps.core',
@@ -142,8 +143,11 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+COMPRESS_ENABLED = True
+
+STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 print(os.path.join(BASE_DIR, "staticsfiles"),)
-#STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
