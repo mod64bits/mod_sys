@@ -22,7 +22,7 @@ class Ticket(BaseModel):
         blank=True
     )
     solicitante = models.CharField('Solicitantes', max_length=100)
-    departamento = models.CharField('Departamento', max_length=100)
+    departamento = models.CharField('Departamento', max_length=100, null=True, blank=True)
     descricao = models.TextField("Descrição do chamado")
     responsavel = models.ForeignKey(
         User,
