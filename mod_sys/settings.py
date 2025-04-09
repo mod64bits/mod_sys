@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'mod_sys',
         'USER': 'postgres',
         'PASSWORD': 'mod64',
-        'HOST': '172.16.1.100',
+        'HOST': '172.16.1.103',
         'PORT': '5432',
     }
 }
