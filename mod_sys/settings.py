@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.relatorios',
     'apps.ordemdeservicos',
     'apps.payment',
+    'apps.api',
 
 ]
 
